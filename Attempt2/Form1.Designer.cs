@@ -51,6 +51,8 @@ namespace Attempt2
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBox12 = new System.Windows.Forms.TextBox();
             this.button10 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -67,8 +69,6 @@ namespace Attempt2
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox12 = new System.Windows.Forms.TextBox();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -317,13 +317,31 @@ namespace Attempt2
             this.groupBox5.Text = "Incrementation";
             this.groupBox5.Enter += new System.EventHandler(this.groupBox5_Enter);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(634, 42);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(98, 25);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Constant";
+            // 
+            // textBox12
+            // 
+            this.textBox12.Location = new System.Drawing.Point(636, 67);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(100, 31);
+            this.textBox12.TabIndex = 10;
+            this.textBox12.Tag = "1;3;4";
+            this.textBox12.Text = "0";
+            // 
             // button10
             // 
             this.button10.Location = new System.Drawing.Point(515, 135);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(158, 64);
             this.button10.TabIndex = 9;
-            this.button10.Tag = "1";
+            this.button10.Tag = "1;3;stop";
             this.button10.Text = "STOP";
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click);
@@ -334,10 +352,10 @@ namespace Attempt2
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(158, 64);
             this.button9.TabIndex = 8;
-            this.button9.Tag = "1";
+            this.button9.Tag = "1;3;start";
             this.button9.Text = "START";
             this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.startButton);
+            this.button9.Click += new System.EventHandler(this.button);
             // 
             // label4
             // 
@@ -354,7 +372,7 @@ namespace Attempt2
             this.textBox11.Name = "textBox11";
             this.textBox11.Size = new System.Drawing.Size(100, 31);
             this.textBox11.TabIndex = 6;
-            this.textBox11.Tag = "1";
+            this.textBox11.Tag = "1;3;3";
             this.textBox11.Text = "0";
             // 
             // label3
@@ -372,7 +390,7 @@ namespace Attempt2
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(100, 31);
             this.textBox10.TabIndex = 4;
-            this.textBox10.Tag = "1";
+            this.textBox10.Tag = "1;3;2";
             this.textBox10.Text = "0";
             // 
             // label1
@@ -391,7 +409,7 @@ namespace Attempt2
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(100, 31);
             this.textBox9.TabIndex = 2;
-            this.textBox9.Tag = "1";
+            this.textBox9.Tag = "1;3;1";
             this.textBox9.Text = "0";
             // 
             // checkedListBox2
@@ -404,7 +422,7 @@ namespace Attempt2
             this.checkedListBox2.Name = "checkedListBox2";
             this.checkedListBox2.Size = new System.Drawing.Size(246, 88);
             this.checkedListBox2.TabIndex = 1;
-            this.checkedListBox2.Tag = "1";
+            this.checkedListBox2.Tag = "1;3;chooseDirection";
             this.checkedListBox2.SelectedIndexChanged += new System.EventHandler(this.increaseDecreaseButton);
             // 
             // checkedListBox1
@@ -417,7 +435,7 @@ namespace Attempt2
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(246, 88);
             this.checkedListBox1.TabIndex = 0;
-            this.checkedListBox1.Tag = "1";
+            this.checkedListBox1.Tag = "1;3;chooseChange";
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.chooseVariableButton);
             // 
             // button8
@@ -480,24 +498,6 @@ namespace Attempt2
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 25);
             this.label2.TabIndex = 3;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(634, 42);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(98, 25);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Constant";
-            // 
-            // textBox12
-            // 
-            this.textBox12.Location = new System.Drawing.Point(636, 67);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(100, 31);
-            this.textBox12.TabIndex = 10;
-            this.textBox12.Tag = "1";
-            this.textBox12.Text = "0";
             // 
             // Form1
             // 
@@ -567,4 +567,5 @@ namespace Attempt2
         private TextBox textBox12;
     }
 }
+
 

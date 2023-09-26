@@ -1,6 +1,5 @@
 
-$selectscript = $arg[0]
-
+$selectscript = $args[0]
 Switch ($selectscript)
 {
 

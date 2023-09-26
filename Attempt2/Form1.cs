@@ -32,6 +32,8 @@ using IronPython.Hosting; //dont need
 using System.Security.Authentication.ExtendedProtection;
 using RohdeSchwarz.RsInstrument.Conversions;
 using TextBox = System.Windows.Forms.TextBox;
+using static IronPython.Modules._ast;
+using System.Runtime.Remoting.Channels;
 
 namespace Attempt2
 {
@@ -49,20 +51,38 @@ namespace Attempt2
 
         }
 
-        private string powerSupply(int command, int channel, int value)
+        private string configuration(int command, int channel, int value)
         {
-            List<JsonDataFormat> var = new List<JsonDataFormat>()
-            {
-                new JsonDataFormat("1", 3, new double[] {command, channel, value} ), //amps , ch1 , value
-                
+            List<JsonDataFormat> config = new List<JsonDataFormat>()
+            {   
+                new JsonDataFormat("configuration.py", 3, new double[] {command, channel, value} ), //amps , ch1 , value  
             };
-            ExportJSON(".data.json", var);
+            
+            ExportJSON(".data.json", config);
 
             string[] arguments = { "PythonCaller.py" };
             string output = RunPowerShellScript("RunPython.ps1", arguments);
             return output;
         }  // Call python class
-            
+
+        private string sweeping(int channel, string type, string way, int start, int end, int increment, int constant)
+        {
+            int variable, direction;
+            if (type == "Voltage") { variable = 0; } else { variable = 1; }
+            if (way == "up") { direction = 0; } else { direction = 1; }
+
+
+            List<JsonDataFormat> sweep = new List<JsonDataFormat>()
+            {
+                new JsonDataFormat("sweeping.py", 7, new double[] { channel, variable, direction, start, end, increment, constant } ),
+            };
+            ExportJSON(".data.json", sweep);
+
+            string[] arguments = { "PythonCaller.py" };
+            string output = RunPowerShellScript("RunPython.ps1", arguments);
+            return output;
+        }  // Call python class
+
         public string PopulatePowerShellScript(string psScriptName, string scriptExt,
                                            string scriptCommand, string[] exclusions)
         {
@@ -337,8 +357,8 @@ namespace Attempt2
                 string[] tag = ((string)source.Tag).Split(';');
                 int channel = int.Parse(tag[0]);
 
-                if (check.Checked) { output = powerSupply(1, channel, 0); }
-                else { output = powerSupply(2, channel, 0); }
+                if (check.Checked) { output = configuration(1, channel, 0); }
+                else { output = configuration(2, channel, 0); }
 
             }
             catch
@@ -354,7 +374,6 @@ namespace Attempt2
                 Console.WriteLine(controlTag);
                 if (controlTag != null && controlTag == tagString)// Contains(tagString))
                 {
-                    Console.WriteLine("TYAYAYSYSYSYYS");
                     return text;
                 }
             }
@@ -373,6 +392,8 @@ namespace Attempt2
                 //Control parent = Controls.Find(source.Parent, true).FirstOrDefault() as TextBox;
 
                 Control parent = source.Parent;
+
+                if (element == 3) { startButton(channel,element,command, parent); }
                 
                 setValue(channel, element, command, parent);
             }
@@ -398,124 +419,130 @@ namespace Attempt2
             if (int.TryParse(textBox.Text, out _))
             {
                 int value = int.Parse(textBox.Text);
-                string output = powerSupply(newCommand, channel, value);
+                string output = configuration(newCommand, channel, value);
             }
             else { MessageBox.Show("Voltage needs to be set to a number"); }
         }
 
-
-
-
-
-
-
-
-        private void startButton(object sender, EventArgs e)
-        {
-            Control source = (Control)sender;
+        private void startButton(int channel, int element, string command, Control parent)
+        {   
+            if (command == "stop")
+            {
+                // use supply.write.end()
+            }
             try
             {
-                string[] tag = ((string)source.Tag).Split(';');
-                int channel = int.Parse(tag[0]);
+                string elementTag = channel + ";"  + element;
+                TextBox textBox;
 
                 // get change value
-                string variable = variableChoice(channel);
+                string variable = variableChoice(parent, elementTag); 
 
                 // get up down
-                string upDown = directionChoice(channel);
+                string upDown = directionChoice(parent,elementTag);
+
+                int start = 0, end = 0, increment = 0, constant = 0;
+
 
                 // get start
-                if (int.TryParse(textBox9.Text, out _))
-                {
-                    int start = int.Parse(textBox9.Text); //which channel  cause this is messy
+                textBox = (TextBox)findTextFromTag(parent, elementTag + ";" + 1);
+                try {
+                    int.TryParse(textBox.Text, out _);
+                    start = int.Parse(textBox.Text); //which channel  cause this is messy
                 }
-                else { MessageBox.Show("Start needs to be set to a number"); }
+                catch { MessageBox.Show("Start needs to be set to a number"); }
 
                 // get end
-                if (int.TryParse(textBox10.Text, out _))
-                {
-                    int end = int.Parse(textBox10.Text); //which channel  cause this is messy
+                textBox = (TextBox)findTextFromTag(parent, elementTag + ";" + 2);
+                try { 
+                    int.TryParse(textBox.Text, out _);
+                    end = int.Parse(textBox.Text); //which channel  cause this is messy
                 }
-                else { MessageBox.Show("End needs to be set to a number"); }
+                catch { MessageBox.Show("End needs to be set to a number"); }
 
                 // get increment
-                if (int.TryParse(textBox11.Text, out _))
-                {
-                    int increment = int.Parse(textBox11.Text); //which channel  cause this is messy
+                textBox = (TextBox)findTextFromTag(parent, elementTag + ";" + 3);
+                try {
+                    int.TryParse(textBox.Text, out _);
+                    increment = int.Parse(textBox.Text); //which channel  cause this is messy
                 }
-                else { MessageBox.Show("Increment needs to be set to a number"); }
+                catch { MessageBox.Show("Increment needs to be set to a number"); }
 
                 // get constant
-                if (int.TryParse(textBox12.Text, out _))
-                {
-                    int constant = int.Parse(textBox12.Text); //which channel  cause this is messy
+                textBox = (TextBox)findTextFromTag(parent, elementTag + ";" + 4);
+                try{
+                    int.TryParse(textBox.Text, out _);
+                    constant = int.Parse(textBox.Text); //which channel  cause this is messy
                 }
-                else { MessageBox.Show("Constant needs to be set to a number"); }
+                catch { MessageBox.Show("Constant needs to be set to a number"); }
 
                 // send to code
+                sweeping(channel, variable, upDown, start, end, increment, constant);
             }
-            catch { }
+            catch { Console.WriteLine("Error with start button"); }
         }
 
 
+        
 
-        private void groupBox4_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-
-
-
-
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox5_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void chooseVariableButton(object sender, EventArgs e)
-        {
-        }
-
-        private string variableChoice(int channel) // whys it taking more than one???
+        private string variableChoice(Control parent, string tag) // whys it taking more than one???
         {
             string choice = "";
-            if (checkedListBox1.CheckedItems.Count != 0) //needs to take channel
+            CheckedListBox checkedListBox = (CheckedListBox)findTextFromTag(parent, tag + ";" + "chooseChange");  
+            if (checkedListBox.CheckedItems.Count != 0) //needs to take channel
             {
-                choice = checkedListBox1.CheckedItems[0].ToString().Split(' ').Last();
+                choice = checkedListBox.CheckedItems[0].ToString().Split(' ').Last();
                 
             }
             return choice;
         }
 
-        private void increaseDecreaseButton(object sender, EventArgs e)
-        {
-
-        }
-
-        private string directionChoice(int channel) // whys it taking more than one???
+       
+        private string directionChoice(Control parent, string tag) // whys it taking more than one???
         {
             string choice = "";
-            if (checkedListBox2.CheckedItems.Count != 0) //needs to take channel
+            CheckedListBox checkedListBox = (CheckedListBox)findTextFromTag(parent, tag + ";" + "chooseDirection");
+            if (checkedListBox.CheckedItems.Count != 0) //needs to take channel
             {
-                choice = checkedListBox2.CheckedItems[0].ToString();
+                choice = checkedListBox.CheckedItems[0].ToString();
             }
             return choice;
         }
+
+
+
+
+
+
+        // IRRELEVANT
 
         private void label1_Click(object sender, EventArgs e)
         {
 
         }
 
+        private void increaseDecreaseButton(object sender, EventArgs e)
+        {
 
+        }
+        private void chooseVariableButton(object sender, EventArgs e)
+        {
+        }
         private void button10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox4_Enter(object sender, EventArgs e)
+        {
+
+        }
+        private void groupBox5_Enter(object sender, EventArgs e)
         {
 
         }
