@@ -108,6 +108,11 @@ namespace Attempt2
             this.textBox20 = new System.Windows.Forms.TextBox();
             this.checkedListBox5 = new System.Windows.Forms.CheckedListBox();
             this.checkedListBox6 = new System.Windows.Forms.CheckedListBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.mainControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.createTestListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.groupBox3.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -116,11 +121,13 @@ namespace Attempt2
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
             // 
             // groupBox3
             // 
@@ -965,6 +972,46 @@ namespace Attempt2
             this.checkedListBox6.Tag = "3;3;chooseChange";
             this.checkedListBox6.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mainControlsToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.createTestListToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1690, 42);
+            this.menuStrip1.TabIndex = 15;
+            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
+            // 
+            // mainControlsToolStripMenuItem
+            // 
+            this.mainControlsToolStripMenuItem.Name = "mainControlsToolStripMenuItem";
+            this.mainControlsToolStripMenuItem.Size = new System.Drawing.Size(180, 38);
+            this.mainControlsToolStripMenuItem.Text = "Main controls";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 38);
+            // 
+            // createTestListToolStripMenuItem
+            // 
+            this.createTestListToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSeparator3});
+            this.createTestListToolStripMenuItem.Name = "createTestListToolStripMenuItem";
+            this.createTestListToolStripMenuItem.Size = new System.Drawing.Size(186, 38);
+            this.createTestListToolStripMenuItem.Text = "Create test list";
+            this.createTestListToolStripMenuItem.Click += new System.EventHandler(this.createTestListToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(356, 6);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -976,6 +1023,8 @@ namespace Attempt2
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Power SupplyGUI";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -995,7 +1044,10 @@ namespace Attempt2
             this.groupBox6.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1078,6 +1130,11 @@ namespace Attempt2
         private TextBox textBox20;
         private CheckedListBox checkedListBox5;
         private CheckedListBox checkedListBox6;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem mainControlsToolStripMenuItem;
+        private ToolStripMenuItem createTestListToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripSeparator toolStripSeparator3;
     }
 }
 

@@ -52,6 +52,8 @@ namespace Attempt2
 
         }
 
+        
+
         private void configuration(int command, int channel, int value)
         {
             List<JsonDataFormat> config = new List<JsonDataFormat>()
@@ -211,11 +213,7 @@ namespace Attempt2
                 // Extract just the file name.
                 string fileName = script.Split('/')[numberOfSlashes - 1];
                 // Copy it over.
-                Console.WriteLine(fileName);
-                Console.WriteLine("00000000000000000000000");
-                Console.WriteLine(scriptsDir + fileName);
-                Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaa");
-                Console.WriteLine(workingDir + fileName);
+                
                 File.Copy(scriptsDir + fileName, workingDir + fileName, true);
             }
         }
@@ -505,7 +503,6 @@ namespace Attempt2
             choice = checkedListBox.CheckedItems[0].ToString().Split(' ').Last();
             return choice;
         }
-
        
         private string directionChoice(Control parent, string tag) // whys it taking more than one???
         {
@@ -515,7 +512,6 @@ namespace Attempt2
             return choice;
         }
 
-        
         private void checkedListBox(object sender, EventArgs e)
         {
             CheckedListBox source = (CheckedListBox)sender;
@@ -530,7 +526,11 @@ namespace Attempt2
             }
         }
 
-
+        private void createTestListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form2 diy = new Form2();
+            diy.Show();
+        }
 
 
 
@@ -562,6 +562,18 @@ namespace Attempt2
         {
 
         }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        
 
 
         /*static void IronPython(string action, string channel, string input)
