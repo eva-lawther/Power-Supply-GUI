@@ -502,11 +502,7 @@ namespace Attempt2
         {
             string choice = "";
             CheckedListBox checkedListBox = (CheckedListBox)findTextFromTag(parent, tag + ";" + "chooseChange");  
-            if (checkedListBox.CheckedItems.Count != 0) //needs to take channel
-            {
-                choice = checkedListBox.CheckedItems[0].ToString().Split(' ').Last();
-                
-            }
+            choice = checkedListBox.CheckedItems[0].ToString().Split(' ').Last();
             return choice;
         }
 
@@ -515,18 +511,12 @@ namespace Attempt2
         {
             string choice = "";
             CheckedListBox checkedListBox = (CheckedListBox)findTextFromTag(parent, tag + ";" + "chooseDirection");
-            if (checkedListBox.CheckedItems.Count != 0) //needs to take channel
-            {
-                choice = checkedListBox.CheckedItems[0].ToString();
-            }
+            choice = checkedListBox.CheckedItems[0].ToString();
             return choice;
         }
 
-        private void increaseDecreaseButton(object sender, EventArgs e)
-        {
-
-        }
-        private void chooseVariableButton(object sender, EventArgs e)
+        
+        private void checkedListBox(object sender, EventArgs e)
         {
             CheckedListBox source = (CheckedListBox)sender;
             int index = source.SelectedIndex;

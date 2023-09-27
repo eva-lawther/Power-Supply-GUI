@@ -263,7 +263,7 @@ namespace Attempt2
             this.checkedListBox7.Size = new System.Drawing.Size(246, 88);
             this.checkedListBox7.TabIndex = 1;
             this.checkedListBox7.Tag = "4;3;chooseDirection";
-            this.checkedListBox7.SelectedIndexChanged += new System.EventHandler(this.increaseDecreaseButton);
+            this.checkedListBox7.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
             // 
             // checkedListBox8
             // 
@@ -276,7 +276,7 @@ namespace Attempt2
             this.checkedListBox8.Size = new System.Drawing.Size(246, 88);
             this.checkedListBox8.TabIndex = 0;
             this.checkedListBox8.Tag = "4;3;chooseChange";
-            this.checkedListBox8.SelectedIndexChanged += new System.EventHandler(this.chooseVariableButton);
+            this.checkedListBox8.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
             // 
             // button6
             // 
@@ -607,7 +607,7 @@ namespace Attempt2
             this.checkedListBox2.Size = new System.Drawing.Size(246, 88);
             this.checkedListBox2.TabIndex = 1;
             this.checkedListBox2.Tag = "1;3;chooseDirection";
-            this.checkedListBox2.SelectedIndexChanged += new System.EventHandler(this.increaseDecreaseButton);
+            this.checkedListBox2.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
             // 
             // checkedListBox1
             // 
@@ -620,7 +620,7 @@ namespace Attempt2
             this.checkedListBox1.Size = new System.Drawing.Size(246, 88);
             this.checkedListBox1.TabIndex = 0;
             this.checkedListBox1.Tag = "1;3;chooseChange";
-            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.chooseVariableButton);
+            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
             // 
             // button8
             // 
@@ -809,7 +809,7 @@ namespace Attempt2
             this.checkedListBox3.Size = new System.Drawing.Size(246, 88);
             this.checkedListBox3.TabIndex = 1;
             this.checkedListBox3.Tag = "2;3;chooseDirection";
-            this.checkedListBox3.SelectedIndexChanged += new System.EventHandler(this.increaseDecreaseButton);
+            this.checkedListBox3.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
             // 
             // checkedListBox4
             // 
@@ -822,7 +822,7 @@ namespace Attempt2
             this.checkedListBox4.Size = new System.Drawing.Size(246, 88);
             this.checkedListBox4.TabIndex = 0;
             this.checkedListBox4.Tag = "2;3;chooseChange";
-            this.checkedListBox4.SelectedIndexChanged += new System.EventHandler(this.chooseVariableButton);
+            this.checkedListBox4.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
             // 
             // groupBox7
             // 
@@ -950,7 +950,7 @@ namespace Attempt2
             this.checkedListBox5.Size = new System.Drawing.Size(246, 88);
             this.checkedListBox5.TabIndex = 1;
             this.checkedListBox5.Tag = "3;3;chooseDirection";
-            this.checkedListBox5.SelectedIndexChanged += new System.EventHandler(this.increaseDecreaseButton);
+            this.checkedListBox5.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
             // 
             // checkedListBox6
             // 
@@ -963,7 +963,7 @@ namespace Attempt2
             this.checkedListBox6.Size = new System.Drawing.Size(246, 88);
             this.checkedListBox6.TabIndex = 0;
             this.checkedListBox6.Tag = "3;3;chooseChange";
-            this.checkedListBox6.SelectedIndexChanged += new System.EventHandler(this.chooseVariableButton);
+            this.checkedListBox6.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
             // 
             // Form1
             // 
