@@ -3,33 +3,20 @@ from tkinter import Variable
 import pyvisa
 from time import sleep
 from commandClass import channelInstrument 
-rm = pyvisa.ResourceManager()
 import sed_json as fm #file manager ### C# Interaction
 
-print("Resources detected\n{}\n".format(rm.list_resources()))
 
-supply = rm.open_resource('ASRL13::INSTR') # resource id for power supply
-dmm = rm.open_resource('ASRL6::INSTR')    # resource id for digital multi meter
+def devices():
+    rm = pyvisa.ResourceManager()
+    print("Resources detected\n{}\n".format(rm.list_resources()))
+    supply = rm.open_resource('ASRL13::INSTR') # resource id for power supply   
+    dmm = rm.open_resource('ASRL6::INSTR')    # resource id for digital multi meter
+    # set digital multimeter to dc voltage mode
+    dmm.write('VDC')
+    return (supply, dmm, rm)
 
-# set digital multimeter to dc voltage mode
-dmm.write('VDC')
 
-program_out_script_in_json_buffer = fm.import_json(".data.json")
-
-dummy = program_out_script_in_json_buffer[0]
-channel = dummy.Values[0]
-variable = dummy.Values[1]
-direction = dummy.Values[2]
-start = dummy.Values[3]
-end = dummy.Values[4]
-increment = dummy.Values[5]
-constant = dummy.Values[6]
-
-set = channelInstrument(channel, supply)
-
-# turn power supply (ch1) off, set ch1 with 200mA and then turn ch1 on
-set.turnOff() # turn off
-if variable == "Voltage":
+def variableVoltage(constant, start, end, increment, supply, dmm):
     set.setAmps(constant)
     set.setVoltage(start)
     set.turnOn()
@@ -44,7 +31,7 @@ if variable == "Voltage":
 
         start += increment 
 
-else: # variable == 'Amplitude'
+def variableAmps(constant, start, end, increment, supply, dmm): # variable == 'Amplitude'
     set.setVoltage(constant)
     set.setAmps(start)
     set.turnOn()
@@ -59,4 +46,29 @@ else: # variable == 'Amplitude'
 
         start += increment 
 
-set.end()
+def getValues():
+    program_out_script_in_json_buffer = fm.import_json(".data.json")
+
+    dummy = program_out_script_in_json_buffer[0]
+    channel = dummy.Values[0]
+    variable = dummy.Values[1]
+    direction = dummy.Values[2]
+    start = dummy.Values[3]
+    end = dummy.Values[4]
+    increment = dummy.Values[5]
+    constant = dummy.Values[6]
+
+def main():
+    supply, dmm, rm = devices()  
+    
+    channel, variable, direction, start, end, increment, constant = getValues()
+
+    set = channelInstrument(channel, supply)
+    set.turnOff() # turn off
+
+    if variable == "Voltage":
+        variableVoltage(constant, start, end, increment, supply, dmm)
+    else:
+        variableAmps(constant, start, end, increment,supply, dmm)   
+    rm.close()
+    set.end() 

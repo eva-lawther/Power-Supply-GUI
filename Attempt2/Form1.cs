@@ -51,18 +51,17 @@ namespace Attempt2
 
         }
 
-        private string configuration(int command, int channel, int value)
+        private void configuration(int command, int channel, int value)
         {
             List<JsonDataFormat> config = new List<JsonDataFormat>()
             {   
                 new JsonDataFormat("configuration.py", 3, new double[] {command, channel, value} ), //amps , ch1 , value  
             };
-            
-            ExportJSON(".data.json", config);
+
+            ExportJSON(".data.json", config, true);
 
             string[] arguments = { "PythonCaller.py" };
             string output = RunPowerShellScript("RunPython.ps1", arguments);
-            return output;
         }  // Call python class
 
         private string sweeping(int channel, string type, string way, int start, int end, int increment, int constant)
@@ -76,7 +75,7 @@ namespace Attempt2
             {
                 new JsonDataFormat("sweeping.py", 7, new double[] { channel, variable, direction, start, end, increment, constant } ),
             };
-            ExportJSON(".data.json", sweep);
+            ExportJSON(".data.json", sweep, true);
 
             string[] arguments = { "PythonCaller.py" };
             string output = RunPowerShellScript("RunPython.ps1", arguments);
@@ -211,66 +210,82 @@ namespace Attempt2
                 // Extract just the file name.
                 string fileName = script.Split('/')[numberOfSlashes - 1];
                 // Copy it over.
+                Console.WriteLine(fileName);
+                Console.WriteLine("00000000000000000000000");
+                Console.WriteLine(scriptsDir + fileName);
+                Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaa");
+                Console.WriteLine(workingDir + fileName);
                 File.Copy(scriptsDir + fileName, workingDir + fileName, true);
             }
         }
 
 
-        public bool ExportJSON(string jsonFile, List<JsonDataFormat> jsonDataOut)
+        public bool ExportJSON(string jsonFile, List<JsonDataFormat> jsonDataOut, bool overwrite)
         {
             try
             {
-                // Lock the file
-                FileStream fs = new FileStream(jsonFile, FileMode.Open,
-                                                FileAccess.ReadWrite, FileShare.Read);
-                // Generating a list of JsonDataFormat types
-                List<JsonDataFormat> existingData = new List<JsonDataFormat>();
-                // Try extracting the existing data into the list.
-                try
+                // Lock the file
+                FileStream fs = new FileStream(jsonFile, FileMode.Open,
+                        FileAccess.ReadWrite, FileShare.Read);
+                string jsonString;
+                // Generating a list of JsonDataFormat types
+                List<JsonDataFormat> existingData = new List<JsonDataFormat>();
+                // Try extracting the existing data into the list.
+                try
                 {
                     using (StreamReader r = new StreamReader(fs))
                     {
                         string json = r.ReadToEnd();
-                        existingData = JsonSerializer.Deserialize<List<JsonDataFormat>>(json);
+                        if (!overwrite) existingData = JsonSerializer.Deserialize<List<JsonDataFormat>>(json);
                     }
                 }
                 catch
                 {
-                    // Empty file!;
-                }
-                // Check through existing data and either overwrite or append new elements.
-                foreach (JsonDataFormat objectOut in jsonDataOut)
+                    // Empty file!;
+                }
+                if (overwrite)
                 {
-                    bool match = false;
-                    foreach (JsonDataFormat existingObject in existingData)
+                    // Write out the objects to the JSON file.
+                    jsonString = JsonSerializer.Serialize(jsonDataOut, new JsonSerializerOptions() { WriteIndented = true });
+                }
+                else
+                {
+                    // Check through existing data and either overwrite or append new elements.
+                    foreach (JsonDataFormat objectOut in jsonDataOut)
                     {
-                        if (objectOut.Id == existingObject.Id)
+                        bool match = false;
+                        foreach (JsonDataFormat existingObject in existingData)
                         {
-                            existingObject.Id = objectOut.Id;
-                            existingObject.Length = objectOut.Length;
-                            existingObject.Values = objectOut.Values;
-                            match = true;
-                            break;
+                            if (objectOut.Id == existingObject.Id)
+                            {
+                                existingObject.Id = objectOut.Id;
+                                existingObject.Length = objectOut.Length;
+                                existingObject.Values = objectOut.Values;
+                                match = true;
+                                break;
+                            }
+                        }
+                        if (!match)
+                        {
+                            existingData.Add(objectOut);
                         }
                     }
-                    if (!match)
-                    {
-                        existingData.Add(objectOut);
-                    }
+                    // Write out the objects to the JSON file.
+                    jsonString = JsonSerializer.Serialize(existingData, new JsonSerializerOptions() { WriteIndented = true });
                 }
-                // Write out the objects to the JSON file.
-                string jsonString = JsonSerializer.Serialize(existingData, new JsonSerializerOptions() { WriteIndented = true });
+
                 using (StreamWriter outputFile = new StreamWriter(jsonFile))
                 {
                     outputFile.WriteLine(jsonString);
+                    Console.WriteLine(jsonString.ToString());
                 }
-                // Unlock the file.
-                fs.Close();
+                // Unlock the file.
+                fs.Close();
                 fs.Dispose();
             }
-            catch
+            catch (Exception ex)
             {
-                // Print("File open in another application!");
+                Console.WriteLine(ex);
                 return false;
             }
             return true;
@@ -357,8 +372,8 @@ namespace Attempt2
                 string[] tag = ((string)source.Tag).Split(';');
                 int channel = int.Parse(tag[0]);
 
-                if (check.Checked) { output = configuration(1, channel, 0); }
-                else { output = configuration(2, channel, 0); }
+                if (check.Checked) { configuration(1, channel, 0); }
+                else { configuration(2, channel, 0); }
 
             }
             catch
@@ -419,7 +434,7 @@ namespace Attempt2
             if (int.TryParse(textBox.Text, out _))
             {
                 int value = int.Parse(textBox.Text);
-                string output = configuration(newCommand, channel, value);
+                configuration(newCommand, channel, value);
             }
             else { MessageBox.Show("Voltage needs to be set to a number"); }
         }
@@ -543,6 +558,11 @@ namespace Attempt2
 
         }
         private void groupBox5_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkedListBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

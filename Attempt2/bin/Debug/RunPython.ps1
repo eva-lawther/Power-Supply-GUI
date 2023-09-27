@@ -5,6 +5,7 @@ Switch ($selectscript)
 
 	'channelClass.py' {python channelClass.py}
 	'commandClass.py' {python commandClass.py}
+	'configuration.py' {python configuration.py}
 	'module1.py' {python module1.py}
 	'powerSupplyCommands.py' {python powerSupplyCommands.py}
 	'PythonCaller.py' {python PythonCaller.py}
