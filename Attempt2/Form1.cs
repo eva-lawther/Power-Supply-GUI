@@ -34,6 +34,7 @@ using RohdeSchwarz.RsInstrument.Conversions;
 using TextBox = System.Windows.Forms.TextBox;
 using static IronPython.Modules._ast;
 using System.Runtime.Remoting.Channels;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace Attempt2
 {
@@ -497,9 +498,6 @@ namespace Attempt2
             catch { Console.WriteLine("Error with start button"); }
         }
 
-
-        
-
         private string variableChoice(Control parent, string tag) // whys it taking more than one???
         {
             string choice = "";
@@ -524,6 +522,24 @@ namespace Attempt2
             return choice;
         }
 
+        private void increaseDecreaseButton(object sender, EventArgs e)
+        {
+
+        }
+        private void chooseVariableButton(object sender, EventArgs e)
+        {
+            CheckedListBox source = (CheckedListBox)sender;
+            int index = source.SelectedIndex;
+            int count = source.Items.Count;
+            for(int i = 0; i < count; i++)
+            {
+                if(index != i)
+                {
+                    source.SetItemChecked(i, false);
+                }
+            }
+        }
+
 
 
 
@@ -536,14 +552,7 @@ namespace Attempt2
 
         }
 
-        private void increaseDecreaseButton(object sender, EventArgs e)
-        {
-
-        }
-        private void chooseVariableButton(object sender, EventArgs e)
-        {
-        }
-        
+       
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
