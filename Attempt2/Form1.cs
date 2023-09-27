@@ -408,9 +408,9 @@ namespace Attempt2
 
                 Control parent = source.Parent;
 
-                if (element == 3) { startButton(channel,element,command, parent); }
-                
-                setValue(channel, element, command, parent);
+                if (element == 3) { startButton(channel, element, command, parent); }
+
+                else { setValue(channel, element, command, parent); }
             }
             catch { Console.WriteLine("Problem with button!"); }
         }
@@ -543,10 +543,7 @@ namespace Attempt2
         private void chooseVariableButton(object sender, EventArgs e)
         {
         }
-        private void button10_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -566,6 +563,7 @@ namespace Attempt2
         {
 
         }
+
 
         /*static void IronPython(string action, string channel, string input)
         {

@@ -11,10 +11,10 @@ def devices():
     rm = pyvisa.ResourceManager()
     print("Resources detected\n{}\n".format(rm.list_resources()))
     supply = rm.open_resource('ASRL13::INSTR') # resource id for power supply   
-    dmm = rm.open_resource('ASRL6::INSTR')    # resource id for digital multi meter
+    #dmm = rm.open_resource('ASRL6::INSTR')    # resource id for digital multi meter
     # set digital multimeter to dc voltage mode
-    dmm.write('VDC')
-    return (supply, dmm, rm)
+    #dmm.write('VDC')
+    return (supply,  rm)
 
 
 
@@ -41,7 +41,7 @@ def doCommand(channel, command, value):
         
 
 def main():
-    supply, dmm, rm = devices()  
+    supply,  rm = devices()  
     
     command, channelNo, value = getValues()
     
