@@ -29,17 +29,12 @@ namespace Attempt2
                 File.Exists(commandFile);
                 string[] fileLines = File.ReadAllLines(commandFile);
                 
-                string[,] commands = new string [2,fileLines.Length];
+                string[,] commands = new string [fileLines.Length,2];
                 Console.WriteLine(fileLines.Length);
                 
                 for (int line = 0; line < (fileLines.Length); line++)
                 {
-                    //Console.WriteLine(line);
-                    //Console.WriteLine(fileLines[line]);
                     string[] work = fileLines[line].Split(';');
-                    //Console.WriteLine(work[0]);
-                    //Console.WriteLine(work[1]);
-                    //Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                     commands[line,0] = work[0];
                     commands[line,1] = work[1];
                     contextMenuStrip.Items.Add(work[1]);
