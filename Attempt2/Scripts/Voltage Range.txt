@@ -1,0 +1,2 @@
+VRANGE<N> <NRFV>; Set output<N> voltage range to <NRF> 
+VRANGE<N>?; Returns the voltage range for output<N>

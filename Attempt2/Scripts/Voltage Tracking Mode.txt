@@ -1,0 +1,2 @@
+CONFIG <NRFM>; Sets the voltage tracking mode of the unit to <NRF>
+CONFIG?; Returns the voltage tracking mode of the unit

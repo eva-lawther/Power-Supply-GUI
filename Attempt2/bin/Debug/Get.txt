@@ -1,0 +1,4 @@
+V<N>?; Return the set voltage of output <N>
+I<N>?; Return the set current limit of output <N>
+V<N>O?; Return the output readback voltage of output <N>
+I<N>O?; Return the output readback current of output <N>

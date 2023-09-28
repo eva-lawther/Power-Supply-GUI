@@ -1,0 +1,2 @@
+SAV<N> <NRFN>; Save the current settings of output<N> to the store specified by <NRF> where <NRF> can be 0-49
+RCL<N> <NRFN>; Recall the settings for output<N> from the store specified by <NRF> where <NRF> can be 0-49

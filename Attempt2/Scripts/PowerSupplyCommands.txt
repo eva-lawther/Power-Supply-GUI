@@ -1,4 +1,9 @@
-V<N> <NRF>; Set output <N> to <NRF> Volts
-V<N>V <NRF>; Set output <N> to <NRF> Volts with verify
-new command; squiggles
-OVP<N> <NRF>; Set output <N> over voltage protection trip point to <NRF> Volts
+Get
+Power
+Presets
+Protection Trip
+Set
+Step Size
+Voltage Range
+Voltage Tracking Mode
+Wait

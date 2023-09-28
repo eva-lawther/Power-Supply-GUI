@@ -1,0 +1,7 @@
+OVP<N> <NRF>; Set output <N> over voltage protection trip point to <NRF> Volts
+OVP<N> <CPD>; Enable or disable the over voltage protection trip point of output <N> where <CPD> can be ON or OFF
+OCP<N> <NRF>; Set output <N> over current protection trip point to <NRF> Amps
+OCP<N> <CPD>; Enables or disables the over current protection trip point where <CPD> can be ON or OFF
+OVP<N>?; Return the voltage trip setting of output <N>
+OCP<N>?; Return the current trip setting of output<N>
+TRIPRST; Attempt to clear all trip conditions

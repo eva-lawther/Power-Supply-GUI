@@ -4,6 +4,7 @@ Switch ($selectscript)
 {
 
 	'channelClass.py' {python channelClass.py}
+	'Command builder.py' {python Command builder.py}
 	'commandClass.py' {python commandClass.py}
 	'configuration.py' {python configuration.py}
 	'module1.py' {python module1.py}

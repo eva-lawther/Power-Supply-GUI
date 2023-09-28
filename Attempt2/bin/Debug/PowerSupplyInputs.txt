@@ -1,0 +1,16 @@
+N = Channel (1-4)
+NRF = Voltage/Ammeter value (3dp
+CPD = ON or OFF
+CPDX = ON/OFF/LOW/MED/HIGH
+NRFX = 0=OFF, 1=ON.
+NRFA = 0=ALL OFF, 1=ALL ON
+NRFV = [Output1: 0= Disable, 1= 35V/3A, 2 = 16V/6A, 3 = 35V/6A.
+Output2: 0= Disable, 1= 35V/3A, 2 = 16V/6A, 3 = 35V/6A.
+Output3: 0= Disable, 1= 35V/3A, 2 = 70V/1.5A, 3 = 70V/3A.
+Output4: 0= Disable, 1= 35V/3A, 2 = 70V/1.5A, 3 = 70V/3A.] //VRANGE
+NRFM = [0 = None.
+1 = Mode1.
+2 = Mode2.
+3 = Mode3.] //CONFIG
+CPDT = QUICK, NEVER or DELAY
+NRFN =Preset (0-49)

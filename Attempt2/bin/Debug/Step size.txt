@@ -1,0 +1,10 @@
+DELTAV<N> <NRF>; Set the output voltage step size of output <N> to <NRF> Volts
+DELTAI<N> <NRF>; Set the output current step size of output <N> to <NRF> Amps
+DELTAV<N>?; Return the output voltage step size of output <N>
+DELTAI<N>?; Return the output current step size of output <N>
+INCV<N>; Increment the output<N> voltage by step size
+INCV<N>V; Increment the output<N> voltage by step size, with verify
+DECV<N>; Decrement the output<N> voltage by step size 
+DECV<N>V; Decrement output<N> voltage by step size, with verify
+INCI<N>; Increment the output<N> current limit by step size
+DECI<N>; Decrement the output<N> current limit by step size
