@@ -110,10 +110,100 @@ namespace Attempt2
                     i++;
                 }
                 string work = commandString.Split(';')[0];
-                Console.WriteLine(work); // Needs to go into a text file with correct values
-
-
+                string final = fillInCommands(work);
+                Console.WriteLine(final); // Needs to go into a text file with correct values
+                writeToFile("commandList.txt", final);
             }
+        }
+
+        private string fillInCommands(string command)
+        {
+            string[] commandString = command.Split('<','>');
+            (string[,] inputArray, string[] key) = fillInInputArray();
+            
+            foreach (string element in commandString)
+            {
+                bool found = false;
+                int i = 0;
+                while (!found && i < commandString.Length)
+                {
+                    if(element == key[i])
+                    {
+                        found = true;
+                    }
+                    else { i++ ; }
+                }
+                if (found)
+                {
+                    Console.WriteLine("Here");
+                    int chosen = makePopUp(inputArray[i,1], inputArray[i,2]);
+                }
+                
+               // if 
+            }
+            return command;
+        }
+
+        private int makePopUp(string values, string request) 
+        {
+            Label label = new Label();
+            label.Text = request;
+            if (values.Substring(0,1) == "[")
+            {
+                values = values.Substring(1, values.Length-2);
+                string[] toReplace = values.Split(',');
+                CheckedListBox options = new CheckedListBox();
+                foreach (string value in toReplace)
+                {
+                    options.Items.Add(value);
+                }
+
+                Form form = new Form();
+                form.Text = "Request!";
+                form.Controls.Add(label);
+                //form.Controls.Add.Spacer?/
+                form.Controls.Add(options);
+                form.Show();
+            }
+
+
+
+
+            return 0;
+        }
+
+        private (string[,],string[]) fillInInputArray()
+        {
+            string currentDir = Directory.GetCurrentDirectory();
+            string file = Directory.GetCurrentDirectory() + "/PowerSupplyInputs.txt";
+            string[] list = File.ReadAllLines(file);
+            string[,] array = new string[list.Length, 3];
+            string[] key = new string[list.Length];
+            for (int i = 0; i < list.Length; i++)
+            {
+                string[] working = list[i].Split(';');
+                array[i, 0] = working[0];
+                key[i] = working[0];
+                array[i, 1] = working[1];
+                array[i, 2] = working[2];
+            }
+            return (array, key);
+        }
+
+        private void writeToFile(string fileName, string command)
+        {
+            try
+            {
+                string myfile = Directory.GetCurrentDirectory() + "/"+ fileName;
+
+                // Appending the given texts
+                using (StreamWriter sw = File.AppendText(myfile))
+                {
+                    sw.WriteLine(command);
+
+                }
+            }
+            catch { }
         }
 
         
@@ -122,12 +212,17 @@ namespace Attempt2
 
         }
 
-        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        private void groupBox1_Enter(object sender, EventArgs e)
         {
 
         }
 
-        private void gdgsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
