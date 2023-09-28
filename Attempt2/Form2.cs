@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Management.Automation.Language;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.PowerShell.Commands;
 using Microsoft.Scripting.Hosting.Shell;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -46,33 +49,71 @@ namespace Attempt2
             
             ContextMenuStrip commandList = new ContextMenuStrip();
             string currentDir = Directory.GetCurrentDirectory();
-            string commandFile =  currentDir + "/" + fileName + ".txt";
+            //string commandFile =  currentDir + "/" + fileName + ".txt";
+            string [] fileLines = commandDoc(fileName);
+            string[,] commands = new string[fileLines.Length, 2];
+            commandList.Items.Add("Back");
+            for (int i = 0; i < fileLines.GetLength(0); i++)
+            {
+                //string[] work = fileLines[i].Split(';');
+                //commands[i, 0] = work[0];
+                //commands[i, 1] = work[1];
+                //commandList.Items.Add(work[1]);
+                commandList.Items.Add(fileLines[i].Split(';')[1]);
+            }
+            string placeHolder = currentDir + "/fileName.txt";
+            File.WriteAllText(placeHolder, fileName);
+
+            commandList.ItemClicked += commandChosen;
+            commandList.Show(button1, new Point(0, button1.Height));
+        }
+
+        private string[] commandDoc(string fileName)
+        {
+            string currentDir = Directory.GetCurrentDirectory();
+            string commandFile = currentDir + "/" + fileName + ".txt";
             try
             {
                 File.Exists(commandFile);
                 string[] fileLines = File.ReadAllLines(commandFile);
-                string[,] commands = new string[fileLines.Length, 2];
-
-                for (int line = 0; line < (fileLines.Length); line++)
-                {
-                    string[] work = fileLines[line].Split(';');
-                    Console.WriteLine(string.Format(work[0], work[1]));
-                    commands[line, 0] = work[0];
-                    commands[line, 1] = work[1];
-                    commandList.Items.Add(work[1]);
-                    
-                }
-            commandList.ItemClicked += commandChosen;
-            commandList.Show(button1, new Point(0, button1.Height));
+               // string[,] commands = new string[fileLines.Length, 2];
+                
+                return fileLines;
             }
-            catch { }
-
-
+            catch
+            {
+                return null;
+            }
+            
         }
 
-        private void commandChosen(object sender, EventArgs e)
+        private void commandChosen(object sender, ToolStripItemClickedEventArgs e)
         {
-            Console.WriteLine("DKASJDKLAJDKJDSAKLDJ");
+            string command = e.ClickedItem.Text;
+            if (command == "Back")
+            {
+                Console.WriteLine("ahaha");//newCommmandButton;
+            }
+            else
+            {
+                string location = Directory.GetCurrentDirectory() + "/fileName.txt" ;
+                string fileName = File.ReadAllLines(location)[0];
+                string[] fileLines = commandDoc(fileName);
+                string commandString = "";
+                int i = 0;
+                while (i< fileLines.Length && commandString == "")
+                {
+                    if (fileLines[i].Contains(commandString))
+                    {
+                        commandString = fileLines[i];
+                    }
+                    i++;
+                }
+                string work = commandString.Split(';')[0];
+                Console.WriteLine(work); // Needs to go into a text file with correct values
+
+
+            }
         }
 
         
