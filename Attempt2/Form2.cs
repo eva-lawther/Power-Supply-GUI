@@ -7,12 +7,15 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management.Automation.Language;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.PowerShell.Commands;
 using Microsoft.Scripting.Hosting.Shell;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
+using Button = System.Windows.Forms.Button;
 
 namespace Attempt2
 {
@@ -32,15 +35,11 @@ namespace Attempt2
             foreach (string file in commandFiles)
             {
                 contextMenuStrip.Items.Add(file);
-               
             }
-
             contextMenuStrip.ItemClicked += new ToolStripItemClickedEventHandler(itemClick);
             contextMenuStrip.Show(button1, new Point(0, button1.Height));
-
-        }
-
-       
+        }  
+        // Make command button that lists categories
 
         private void itemClick(object sender, ToolStripItemClickedEventArgs e) 
         {
@@ -55,18 +54,15 @@ namespace Attempt2
             commandList.Items.Add("Back");
             for (int i = 0; i < fileLines.GetLength(0); i++)
             {
-                //string[] work = fileLines[i].Split(';');
-                //commands[i, 0] = work[0];
-                //commands[i, 1] = work[1];
-                //commandList.Items.Add(work[1]);
                 commandList.Items.Add(fileLines[i].Split(';')[1]);
             }
             string placeHolder = currentDir + "/fileName.txt";
             File.WriteAllText(placeHolder, fileName);
-
-            commandList.ItemClicked += commandChosen;
             commandList.Show(button1, new Point(0, button1.Height));
-        }
+            commandList.ItemClicked += commandChosen;
+
+        } 
+        // Makes a sub menu based on category chosen
 
         private string[] commandDoc(string fileName)
         {
@@ -84,15 +80,18 @@ namespace Attempt2
             {
                 return null;
             }
-            
+
         }
+        // reads text file into array
 
         private void commandChosen(object sender, ToolStripItemClickedEventArgs e)
         {
+            ToolStrip source = (ToolStrip)sender;
+            source.Hide();
             string command = e.ClickedItem.Text;
             if (command == "Back")
             {
-                Console.WriteLine("ahaha");//newCommmandButton;
+                newCommmandButton(null, null);
             }
             else
             {
@@ -100,77 +99,144 @@ namespace Attempt2
                 string fileName = File.ReadAllLines(location)[0];
                 string[] fileLines = commandDoc(fileName);
                 string commandString = "";
-                int i = 0;
+                int i = -1;
                 while (i< fileLines.Length && commandString == "")
                 {
-                    if (fileLines[i].Contains(commandString))
+                    i++;
+                    if (fileLines[i].Contains(command))
                     {
                         commandString = fileLines[i];
                     }
-                    i++;
+                    
                 }
                 string work = commandString.Split(';')[0];
                 string final = fillInCommands(work);
-                Console.WriteLine(final); // Needs to go into a text file with correct values
                 writeToFile("commandList.txt", final);
             }
         }
+        // gets name of chosen command withn category and writes machine instruction to file
 
         private string fillInCommands(string command)
         {
             string[] commandString = command.Split('<','>');
             (string[,] inputArray, string[] key) = fillInInputArray();
-            
+            int tag = 0;
+
             foreach (string element in commandString)
             {
-                bool found = false;
-                int i = 0;
-                while (!found && i < commandString.Length)
+                tag ++;
+                if (element != " ")
                 {
-                    if(element == key[i])
+                    
+
+                    bool found = false;
+                    int i = -1;
+                    while (!found && i < key.Length - 1)
                     {
-                        found = true;
+                        i++;
+                        if (element == key[i])
+                        {
+                            found = true;
+                        }
                     }
-                    else { i++ ; }
+                    if (found)
+                    {
+                        int chosen = makePopUp(inputArray[i, 1], inputArray[i, 2], tag);
+                    }
                 }
-                if (found)
-                {
-                    Console.WriteLine("Here");
-                    int chosen = makePopUp(inputArray[i,1], inputArray[i,2]);
-                }
-                
-               // if 
             }
             return command;
-        }
+        } 
+        // breaks command into what needs user value and makes calls pop up 
 
-        private int makePopUp(string values, string request) 
+        private int makePopUp(string values, string request,int tag) 
         {
-            Label label = new Label();
+            Font font = new Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular);
+            Label label = new Label { AutoSize = true, Font = font, Tag = tag  };
             label.Text = request;
+            label.Location = new Point(30, 34);
             if (values.Substring(0,1) == "[")
             {
                 values = values.Substring(1, values.Length-2);
                 string[] toReplace = values.Split(',');
-                CheckedListBox options = new CheckedListBox();
+                CheckedListBox options = new CheckedListBox { FormattingEnabled = true, Tag = tag + "1" };
+                options.SelectedIndexChanged += new System.EventHandler(getChoice);
+                Button button = new Button { Tag = tag };
+                button.Location = new Point(30, 80);
+                button.Text = "Okay";
+                button.Click += new System.EventHandler(getChosen);
                 foreach (string value in toReplace)
                 {
                     options.Items.Add(value);
                 }
+                options.Location = new Point(30, 80);
+                //using (Form form = new Form())
+                
 
+                
                 Form form = new Form();
                 form.Text = "Request!";
+                form.Controls.Add(button);
                 form.Controls.Add(label);
-                //form.Controls.Add.Spacer?/
                 form.Controls.Add(options);
+                label.Visible= true;
                 form.Show();
             }
 
-
-
-
+            
             return 0;
         }
+        // makes pop up form
+
+        private Control findTextFromTag(Control parentControl, string tagString)
+        {
+            foreach (Control text in parentControl.Controls)
+            {
+                string controlTag = text.Tag.ToString();
+                Console.WriteLine(controlTag);
+                if (controlTag != null && controlTag == tagString)// Contains(tagString))
+                {
+                    return text;
+                }
+            }
+            return null;
+        }
+
+        private void getChoice(object sender, EventArgs e)
+        {
+            CheckedListBox source = (CheckedListBox)sender;
+            int index = source.SelectedIndex;
+            int count = source.Items.Count;
+            
+            for (int i = 0; i < count; i++)
+            {
+                if (index != i)
+                {
+                    source.SetItemChecked(i, false);
+                }
+            }
+            string choice = source.CheckedItems.ToString();
+            Console.WriteLine(choice);
+        }
+
+        private void getChosen(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            Control parent = button.Parent;
+            string tag = button.Tag.ToString();
+            string choice = getNumber(tag, parent);
+            
+            //return choice;
+        }
+
+        private string getNumber(string tag, Control parent)
+        {
+            CheckedListBox checkedList = (CheckedListBox)findTextFromTag(parent, tag + "1");
+            string choice = checkedList.CheckedItems[0].ToString();
+            Console.WriteLine($" Choice: {choice}");
+            return choice;
+        }
+           
 
         private (string[,],string[]) fillInInputArray()
         {
@@ -188,7 +254,7 @@ namespace Attempt2
                 array[i, 2] = working[2];
             }
             return (array, key);
-        }
+        } //fills array of inputs given command input file
 
         private void writeToFile(string fileName, string command)
         {
@@ -206,6 +272,9 @@ namespace Attempt2
             catch { }
         }
 
+
+
+        // Irrelevant
         
         private void Form2_Load(object sender, EventArgs e)
         {
@@ -217,14 +286,17 @@ namespace Attempt2
 
         }
 
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void label1_Click(object sender, EventArgs e)
         {
 
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }

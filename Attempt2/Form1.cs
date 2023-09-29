@@ -367,7 +367,7 @@ namespace Attempt2
             CheckBox check = (CheckBox)sender;
             try
             {
-                string output;
+                //string output;
                 string[] tag = ((string)source.Tag).Split(';');
                 int channel = int.Parse(tag[0]);
 
@@ -576,54 +576,6 @@ namespace Attempt2
         
 
 
-        /*static void IronPython(string action, string channel, string input)
-        {
-            var engine = Python.CreateEngine();
-            var script = @"C:\Users\EvaLawther\WP3\Power Supply GUI\Attempt2\PythonCaller.py";
-            //var script = @"C:\Users\EvaLawther\WP3\Power Supply GUI\module1.py";
-
-            //var searchPaths = engine.GetSearchPaths();
-           // searchPaths.Add(@"C:\myProject\packages\DynamicLanguageRuntime.1.1.2");
-           // searchPaths.Add(@"C:\myProject\packages\IronPython.2.7.7\lib");
-           // searchPaths.Add(@"C:\myProject");
-           // searchPaths.Add(@"C:\myProject\"where myfile.py exists");
-    
-            //engine.SetSearchPaths(searchPaths);
-
-            var source = engine.CreateScriptSourceFromFile(script);
-
-            var argv = new List<string>();
-            argv.Add("");
-            argv.Add(action); // command
-            argv.Add(channel); //channel
-            argv.Add(input); //value
-
-            engine.GetSysModule().SetVariable("argv", argv);
-            
-
-            // output redirect
-            var eIO = engine.Runtime.IO;
-            var errors = new MemoryStream();
-            eIO.SetErrorOutput(errors, Encoding.Default);
-
-            var results = new MemoryStream();
-            eIO.SetOutput(results, Encoding.Default);
-
-            // execute sript
-            var scope = engine.CreateScope();
-            source.Execute(scope);
-
-            // display output
-            string str(byte[] x) => Encoding.Default.GetString(x);
-
-            Console.WriteLine("Errors:");
-            Console.WriteLine(str(errors.ToArray()));
-            Console.WriteLine();
-            Console.WriteLine("Results");
-            Console.WriteLine(str(results.ToArray()));
-
-
-        }*/
 
     }
 }
