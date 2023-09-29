@@ -42,3 +42,13 @@ OP<N> <NRFA>
 OP<N> <NRFA>
 OP<N> <NRFA>
 OP<N> <NRFA>
+OP<N> <NRFA>
+OP<N> <NRFA>
+OP<N> <NRFA>
+VRANGE<N> <NRFV>
+OP<N> <NRFA>
+OP<N> <NRFA>
+OP<N> <NRFX>
+OP<N> <NRFX>
+OP<N> <NRFX>
+OPOkay Okay
