@@ -35,6 +35,7 @@ using TextBox = System.Windows.Forms.TextBox;
 using static IronPython.Modules._ast;
 using System.Runtime.Remoting.Channels;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
+using System.Globalization;
 
 namespace Attempt2
 {
@@ -46,6 +47,7 @@ namespace Attempt2
             ImportAllScripts("../../Scripts/");
             InitialiseJsons(new List<string>() { ".data.json", ".dataReady.json" });
             PopulatePowerShellScript("RunPython.ps1", ".py", "python", null);
+            initialise_BackWorkers();
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -53,21 +55,88 @@ namespace Attempt2
         }
 
         
-
-        private void configuration(int command, int channel, int value)
+        private void configuration(int command, int channel, double value)
         {
             List<JsonDataFormat> config = new List<JsonDataFormat>()
             {   
-                new JsonDataFormat("configuration.py", 3, new double[] {command, channel, value} ), //amps , ch1 , value  
+                new JsonDataFormat("configuration.py", 3, new double[] {command, channel, value} ), 
             };
 
             ExportJSON(".data.json", config, true);
 
             string[] arguments = { "PythonCaller.py" };
             string output = RunPowerShellScript("RunPython.ps1", arguments);
-        }  // Call python class
+            ImportJSON(".dataReady.json");
+            JsonDataFormat obj = ReturnObjFromJsonBuffer("1");
+            string fileLocation = obj.Id;
+            MessageBox.Show(fileLocation);
 
-        private string sweeping(int channel, string type, string way, int start, int end, int increment, int constant)
+        }  // Call python class
+        
+
+        private void initialise_BackWorkers()
+        {
+            /*
+            backgroundWorker1.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
+            backgroundWorker1.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker1_RunWorkerCompleted);
+            */
+            backgroundWorker1.DoWork += backgroundWorker1_DoWork;
+            backgroundWorker1.RunWorkerCompleted +=  backgroundWorker1_RunWorkerCompleted;
+        }
+
+        string dummy_g = "none";
+        bool first_flag_g = true;
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+          
+            if (first_flag_g) {
+                string[] arguments = { "PythonCaller.py" };
+                dummy_g = RunPowerShellScript("RunPython.ps1", arguments);
+                first_flag_g = false;
+            }
+
+            //MessageBox.Show("Hey, I'm done woohoo: " + output);
+        
+            //dummy_g = "not none anymore";
+            return;
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            //MessageBox.Show(dummy_g);
+            first_flag_g = true;
+            ImportJSON(".dataReady.json");
+            try
+            {
+                JsonDataFormat obj = programInScriptOut_jsonBuffer[0];
+                string fileLocation = obj.Id;
+                MessageBox.Show(fileLocation);
+            }
+            catch
+            {
+                MessageBox.Show("Import JSON Problem. " + dummy_g);
+            }
+            
+            
+       
+        }
+        /*
+        private void configuration(int command, int channel, double value)
+        {
+            List<JsonDataFormat> config = new List<JsonDataFormat>()
+            {
+                new JsonDataFormat("configuration.py", 3, new double[] {command, channel, value} ),
+            };
+
+            ExportJSON(".data.json", config, true);
+            //backgroundWorker1_RunWorkerCompleted(null, null);
+            backgroundWorker1.RunWorkerAsync();
+            
+        }  // Call python class
+        */
+        /*
+        private string sweeping(int channel, string type, string way, double start, double end, double increment, double constant)
         {
             int variable, direction;
             if (type == "Voltage") { variable = 0; } else { variable = 1; }
@@ -83,6 +152,28 @@ namespace Attempt2
             string[] arguments = { "PythonCaller.py" };
             string output = RunPowerShellScript("RunPython.ps1", arguments);
             return output;
+        }  // Call python class
+        */
+        private void sweeping(int channel, string type, string way, double start, double end, double increment, double constant)
+        {
+            int variable, direction;
+            if (type == "Voltage") { variable = 0; } else { variable = 1; }
+            if (way == "up") { direction = 0; } else { direction = 1; }
+
+
+            List<JsonDataFormat> sweep = new List<JsonDataFormat>()
+            {
+                new JsonDataFormat("sweeping.py", 7, new double[] { channel, variable, direction, start, end, increment, constant } ),
+            };
+
+            ExportJSON(".data.json", sweep, true);
+            //backgroundWorker1_DoWork(null, null);
+            backgroundWorker1.RunWorkerAsync();
+            /*int j=0;
+            while (true)
+            {
+                j++;
+            }*/
         }  // Call python class
 
         public string PopulatePowerShellScript(string psScriptName, string scriptExt,
@@ -327,7 +418,8 @@ namespace Attempt2
             {
                 foreach (JsonDataFormat element in programInScriptOut_jsonBuffer)
                 {
-                    if (element.Id == id) return element;
+                    return element;
+                    //if (element.Id == id) return element;
                 }
             }
             return null;
@@ -361,7 +453,7 @@ namespace Attempt2
 
         public List<JsonDataFormat> programInScriptOut_jsonBuffer; // Python Interface
 
-        private void OnOffSwitch(object sender, EventArgs e) //coded
+        private void OnOffSwitch(object sender, EventArgs e) 
         {
             Control source = (Control)sender;
             CheckBox check = (CheckBox)sender;
@@ -378,21 +470,31 @@ namespace Attempt2
             catch
             {Console.WriteLine("Problem with button!");}
 
-        } // OnOff Switch
-
-        private Control findTextFromTag(Control parentControl, string tagString)
-        {
-            foreach (Control text in parentControl.Controls)
-            {
-                string controlTag = (string)text.Tag;
-                Console.WriteLine(controlTag);
-                if (controlTag != null && controlTag == tagString)// Contains(tagString))
-                {
-                    return text;
-                }
-            }
-            return null;
         }
+        //turn channel on or off 
+
+        private Control findObjectFromTag(Control parentControl, string tagString)
+        {
+            try
+            {
+                foreach (Control text in parentControl.Controls)
+                {
+                    Console.WriteLine(text.Text);
+                    string controlTag = text.Tag.ToString();
+                    if (controlTag != null && controlTag == tagString)
+                    {
+                        return text;
+                    }
+                }
+                return null;
+            }
+            catch
+            {
+                Console.WriteLine("ERROR in findObjectFromTag");
+                return null;
+            }
+        }
+        // return an object when given its parent and tag
 
         private void button(object sender, EventArgs e)
         {
@@ -403,7 +505,6 @@ namespace Attempt2
                 int channel = int.Parse(tag[0]);
                 int element = int.Parse(tag[1]);
                 string command = tag[2];
-                //Control parent = Controls.Find(source.Parent, true).FirstOrDefault() as TextBox;
 
                 Control parent = source.Parent;
 
@@ -413,36 +514,54 @@ namespace Attempt2
             }
             catch { Console.WriteLine("Problem with button!"); }
         }
+        // when button pressed call relevant function
 
         private void setValue(int channel, int element, string command, Control parent)
         {
-            string tag = channel + ";" + element;
-            TextBox textBox = (TextBox)findTextFromTag(parent, tag);
+            try {
+                string tag = channel + ";" + element;
+                TextBox textBox = (TextBox)findObjectFromTag(parent, tag);
 
-            int newCommand = 0;
+                int newCommand = 0;
 
-            if (command == "setVoltage")
-            {
-                newCommand = 3;
-            }
-            if ((command =="setAmplitude"))
-            {
-                newCommand = 4;
-            }
+                if (command == "setVoltage")
+                {
+                    newCommand = 3;
+                }
+                if ((command == "setAmplitude"))
+                {
+                    newCommand = 4;
+                }
 
-            if (int.TryParse(textBox.Text, out _))
-            {
-                int value = int.Parse(textBox.Text);
-                configuration(newCommand, channel, value);
+                if (double.TryParse(textBox.Text, out _))
+                {
+                    double value = double.Parse(textBox.Text);
+                    configuration(newCommand, channel, value);
+                }
+                else { MessageBox.Show("Voltage needs to be set to a number"); }
             }
-            else { MessageBox.Show("Voltage needs to be set to a number"); }
+            catch
+            {
+                Console.WriteLine("ERROR in setValue");
+            }
+            
         }
+        // setVoltage or amplitude given user input //DOUBLE!!!
 
         private void startButton(int channel, int element, string command, Control parent)
         {   
             if (command == "stop")
             {
-                // use supply.write.end()
+                for (int i = 1; i<=4; i++)
+                {
+                    
+                    for (int j = 3; j <= 4; j++)
+                    {
+                        configuration(j, i, 0);
+                    }
+                    configuration(2, i, 0);
+                }
+      
             }
             try
             {
@@ -455,38 +574,38 @@ namespace Attempt2
                 // get up down
                 string upDown = directionChoice(parent,elementTag);
 
-                int start = 0, end = 0, increment = 0, constant = 0;
+                double start = 0, end = 0, increment = 0, constant = 0;
 
 
                 // get start
-                textBox = (TextBox)findTextFromTag(parent, elementTag + ";" + 1);
+                textBox = (TextBox)findObjectFromTag(parent, elementTag + ";" + 1);
                 try {
-                    int.TryParse(textBox.Text, out _);
-                    start = int.Parse(textBox.Text); //which channel  cause this is messy
+                    double.TryParse(textBox.Text, out _);
+                    start = double.Parse(textBox.Text); 
                 }
                 catch { MessageBox.Show("Start needs to be set to a number"); }
 
                 // get end
-                textBox = (TextBox)findTextFromTag(parent, elementTag + ";" + 2);
-                try { 
-                    int.TryParse(textBox.Text, out _);
-                    end = int.Parse(textBox.Text); //which channel  cause this is messy
+                textBox = (TextBox)findObjectFromTag(parent, elementTag + ";" + 2);
+                try {
+                    double.TryParse(textBox.Text, out _);
+                    end = double.Parse(textBox.Text); 
                 }
                 catch { MessageBox.Show("End needs to be set to a number"); }
 
                 // get increment
-                textBox = (TextBox)findTextFromTag(parent, elementTag + ";" + 3);
+                textBox = (TextBox)findObjectFromTag(parent, elementTag + ";" + 3);
                 try {
-                    int.TryParse(textBox.Text, out _);
-                    increment = int.Parse(textBox.Text); //which channel  cause this is messy
+                    double.TryParse(textBox.Text, out _);
+                    increment = double.Parse(textBox.Text); 
                 }
                 catch { MessageBox.Show("Increment needs to be set to a number"); }
 
                 // get constant
-                textBox = (TextBox)findTextFromTag(parent, elementTag + ";" + 4);
+                textBox = (TextBox)findObjectFromTag(parent, elementTag + ";" + 4);
                 try{
-                    int.TryParse(textBox.Text, out _);
-                    constant = int.Parse(textBox.Text); //which channel  cause this is messy
+                    double.TryParse(textBox.Text, out _);
+                    constant = double.Parse(textBox.Text); 
                 }
                 catch { MessageBox.Show("Constant needs to be set to a number"); }
 
@@ -495,44 +614,75 @@ namespace Attempt2
             }
             catch { Console.WriteLine("Error with start button"); }
         }
+        // run sweeping file given inputs
 
-        private string variableChoice(Control parent, string tag) // whys it taking more than one???
+        private string variableChoice(Control parent, string tag) 
         {
-            string choice = "";
-            CheckedListBox checkedListBox = (CheckedListBox)findTextFromTag(parent, tag + ";" + "chooseChange");  
-            choice = checkedListBox.CheckedItems[0].ToString().Split(' ').Last();
-            return choice;
+            try
+            {
+                string choice = "";
+                CheckedListBox checkedListBox = (CheckedListBox)findObjectFromTag(parent, tag + ";" + "chooseChange");
+                choice = checkedListBox.CheckedItems[0].ToString().Split(' ').Last();
+                return choice;
+            }
+            catch 
+            { 
+                Console.WriteLine("ERROR in variableChoice");
+                return null;
+            }
+            
         }
-       
-        private string directionChoice(Control parent, string tag) // whys it taking more than one???
+        //return whether variable is voltage or amplitude
+
+        private string directionChoice(Control parent, string tag) 
         {
-            string choice = "";
-            CheckedListBox checkedListBox = (CheckedListBox)findTextFromTag(parent, tag + ";" + "chooseDirection");
-            choice = checkedListBox.CheckedItems[0].ToString();
-            return choice;
+            try
+            {
+                string choice = "";
+                CheckedListBox checkedListBox = (CheckedListBox)findObjectFromTag(parent, tag + ";" + "chooseDirection");
+                choice = checkedListBox.CheckedItems[0].ToString();
+                return choice;
+            }
+            catch
+            {
+                Console.WriteLine("ERROR in directionChoice");
+                return null;
+            }
+            
         }
+        //return whether sweeping direction is up or down
 
         private void checkedListBox(object sender, EventArgs e)
         {
-            CheckedListBox source = (CheckedListBox)sender;
-            int index = source.SelectedIndex;
-            int count = source.Items.Count;
-            for(int i = 0; i < count; i++)
+            try
             {
-                if(index != i)
+                CheckedListBox source = (CheckedListBox)sender;
+                int index = source.SelectedIndex;
+                int count = source.Items.Count;
+                for (int i = 0; i < count; i++)
                 {
-                    source.SetItemChecked(i, false);
+                    if (index != i)
+                    {
+                        source.SetItemChecked(i, false);
+                    }
                 }
             }
+            catch { Console.WriteLine("ERROR in checkedListBox"); }
+            
         }
+        // make sure there is only one box ticked in checked list box
 
         private void createTestListToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form2 diy = new Form2();
-            diy.Show();
+            try
+            {
+                Form2 diy = new Form2();
+                diy.Show();
+            }
+            catch { Console.WriteLine("ERROR in createTestListToolStripMenuItem_Click "); }
+            
         }
-
-
+        // call form2 when clicked
 
 
         // IRRELEVANT
@@ -541,14 +691,10 @@ namespace Attempt2
         {
 
         }
-
-       
-
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
-
         private void groupBox4_Enter(object sender, EventArgs e)
         {
 
@@ -557,24 +703,14 @@ namespace Attempt2
         {
 
         }
-
-        private void checkedListBox4_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
 
         }
-
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
         }
-
-        
-
 
 
     }

@@ -25,7 +25,11 @@ def runCommandList(supply):
         line = file.readline()
         if not line:
             break
-        runLine(supply, line)
+        if (line[0:5] == "sleep" ):
+            time = line.split(" ")[1]
+            sleep(time)
+        else:
+            runLine(supply, line)
 
 def runLine(supply, line):
     supply.write(line)    

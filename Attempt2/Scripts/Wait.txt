@@ -1,1 +1,1 @@
-sleep<x>; Sleep for <X> seconds
+sleep <x>; Sleep for <X> seconds

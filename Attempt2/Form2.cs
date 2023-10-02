@@ -238,48 +238,57 @@ namespace Attempt2
 
         private void newCommmandButton(object sender, EventArgs e)
         {
-            //makeAndSaveCommand();
-            ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
-            for (int k = 0; k< COMMAND_GLOBAL.Length; k++)
+            try
             {
-                COMMAND_GLOBAL[k] = null;
+                ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
+                for (int k = 0; k < COMMAND_GLOBAL.Length; k++)
+                {
+                    COMMAND_GLOBAL[k] = null;
+                }
+                string currentDir = Directory.GetCurrentDirectory();
+                string commandFolder = @currentDir + "/PowerSupplyCommands.txt";
+                string[] commandFiles = File.ReadAllLines(commandFolder);
+                foreach (string file in commandFiles)
+                {
+                    contextMenuStrip.Items.Add(file);
+                }
+                contextMenuStrip.ItemClicked += new ToolStripItemClickedEventHandler(itemClick);
+                contextMenuStrip.Show(button1, new Point(0, button1.Height));
             }
-            string currentDir = Directory.GetCurrentDirectory();
-            string commandFolder = @currentDir + "/PowerSupplyCommands.txt";
-            string[] commandFiles = File.ReadAllLines(commandFolder);
-            foreach (string file in commandFiles)
-            {
-                contextMenuStrip.Items.Add(file);
-            }
-            contextMenuStrip.ItemClicked += new ToolStripItemClickedEventHandler(itemClick);
-            contextMenuStrip.Show(button1, new Point(0, button1.Height));
+            catch { Console.WriteLine("Error with new command button: ERROR in newCommandButton"); }
+            
         }  
-        // Make command button that lists categories
+        // Make command button that lists power supply categories
 
         private void itemClick(object sender, ToolStripItemClickedEventArgs e) 
         {
-
-            string fileName = e.ClickedItem.Text;
-            
-            ContextMenuStrip commandList = new ContextMenuStrip();
-            string currentDir = Directory.GetCurrentDirectory();
-            //string commandFile =  currentDir + "/" + fileName + ".txt";
-            string [] fileLines = commandDoc(fileName);
-            string[,] commands = new string[fileLines.Length, 2];
-            commandList.Items.Add("Back");
-            for (int i = 0; i < fileLines.GetLength(0); i++)
+            try
             {
-                commandList.Items.Add(fileLines[i].Split(';')[1]);
+                string fileName = e.ClickedItem.Text;
+
+                ContextMenuStrip commandList = new ContextMenuStrip();
+                string currentDir = Directory.GetCurrentDirectory();
+                //string commandFile =  currentDir + "/" + fileName + ".txt";
+                string[] fileLines = textFileToArray(fileName);
+                string[,] commands = new string[fileLines.Length, 2];
+                commandList.Items.Add("Back");
+                for (int i = 0; i < fileLines.GetLength(0); i++)
+                {
+                    commandList.Items.Add(fileLines[i].Split(';')[1]);
+                }
+                string placeHolder = currentDir + "/fileName.txt";
+                File.WriteAllText(placeHolder, fileName);
+                commandList.Show(button1, new Point(0, button1.Height));
+                commandList.ItemClicked += commandChosen;
             }
-            string placeHolder = currentDir + "/fileName.txt";
-            File.WriteAllText(placeHolder, fileName);
-            commandList.Show(button1, new Point(0, button1.Height));
-            commandList.ItemClicked += commandChosen;
+            catch { Console.WriteLine("Cannot find category file: ERROR in itemClick"); }
+            
 
-        } 
-        // Makes a sub menu based on category chosen
+        }
+        // Makes a sub menu based on power supply category chosen
 
-        private string[] commandDoc(string fileName)
+
+        private string[] textFileToArray(string fileName)
         {
             string currentDir = Directory.GetCurrentDirectory();
             string commandFile = currentDir + "/" + fileName + ".txt";
@@ -293,61 +302,50 @@ namespace Attempt2
             }
             catch
             {
+                Console.WriteLine("cannot find command file: ERROR in textFileToArray()");
                 return null;
             }
 
         }
-        // reads text file into array
+        // Reads text file into array
 
         private void commandChosen(object sender, ToolStripItemClickedEventArgs e)
         {
-            //makeAndSaveCommand();
-            int length = 0;
-            ToolStrip source = (ToolStrip)sender;
-            source.Hide();
-            string command = e.ClickedItem.Text;
-            if (command == "Back")
+            try
             {
-                newCommmandButton(null, null);
-            }
-            else
-            {
-                string location = Directory.GetCurrentDirectory() + "/fileName.txt" ;
-                string fileName = File.ReadAllLines(location)[0];
-                string[] fileLines = commandDoc(fileName);
-                string commandString = "";
-                int i = -1;
-                while (i< fileLines.Length && commandString == "")
+                int length = 0;
+                ToolStrip source = (ToolStrip)sender;
+                source.Hide();
+                string command = e.ClickedItem.Text;
+                if (command == "Back")
                 {
-                    i++;
-                    if (fileLines[i].Contains(command))
-                    {
-                        commandString = fileLines[i];
-                    }
-                    
+                    newCommmandButton(null, null);
                 }
-                string work = commandString.Split(';')[0];
-                length = fillInCommands(work);
+                else
+                {
+                    string location = Directory.GetCurrentDirectory() + "/fileName.txt";
+                    string fileName = File.ReadAllLines(location)[0];
+                    string[] fileLines = textFileToArray(fileName);
+                    string commandString = "";
+                    int i = -1;
+                    while (i < fileLines.Length && commandString == "")
+                    {
+                        i++;
+                        if (fileLines[i].Contains(command))
+                        {
+                            commandString = fileLines[i];
+                        }
 
-                
-                //string final = fillInCommands(work);
-                //writeToFile("commandList.txt", final);
+                    }
+                    string work = commandString.Split(';')[0];
+                    length = fillInCommands(work);
+                }
             }
-
-
+            catch { Console.WriteLine("ERROR in commandChosen"); }
+            
         }
-        // gets name of chosen command withn category and writes machine instruction to file
-        private string makeAndSaveCommand()
-        {
-            string final = string.Join("", COMMAND_GLOBAL); 
-            //Console.WriteLine(final);
-            //MessageBox.Show(final);
-            return final;
-
-        }
-
-
-
+        // given chosen command, gets machine code and calls for user input
+       
         private int fillInCommands(string command)
         {
             string[] commandString = command.Split('<','>');
@@ -364,7 +362,6 @@ namespace Attempt2
             foreach (string element in commandString)
             {
                 string chosen = element;
-               // Console.WriteLine(chosen);
                 if (element != " ")
                 {
                     
@@ -381,8 +378,8 @@ namespace Attempt2
                     }
                     if (found)
                     {
-                        chosen =  makePopUp(inputArray[i, 1], inputArray[i, 2], tag);
-                        chosen = null;//button.Text;
+                        makePopUp(inputArray[i, 1], inputArray[i, 2], tag);
+                        chosen = null;
                     }
                 }
                 COMMAND_GLOBAL[tag] = chosen;
@@ -390,58 +387,67 @@ namespace Attempt2
 
 
             }
-            //string commandFinal = string.Join("", commandArray);
-            //Console.WriteLine(commandFinal);
             return commandString.Length;
         }
+        // calls makePopUp for all variables that require user input in command
 
         private void addCommand(object sender, EventArgs e)
         {
-            Button source = (Button)sender;
-            Control parent = source.Parent;
-            Form form = (Form)parent;
-           // CheckedListBox checkedListBox = (CheckedListBox)findTextFromTag(Form2, "MAIN");
-            string final = makeAndSaveCommand();
-            CheckedListBox checkedListBox = Controls.Find("checkedListBox1", true).FirstOrDefault() as CheckedListBox;
-            checkedListBox.Items.Add(final, CheckState.Checked);
-            form.Hide();
-
-        }
-
-        // breaks command into what needs user value and makes calls pop up 
-
-        private string makePopUp(string values, string request,int tag) 
-        {
-            Font font = new Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular);
-            Label label = new Label { AutoSize = true, Font = font, Tag = tag  };
-            label.Text = request;
-            label.Location = new Point(30, 34);
-            Button button = new Button { Tag = tag };
-            button.Text = "Okay";
-
-            if (values.Substring(0,1) == "[") {checkListPopUp(label, tag, values, button);}
-            else if (values == "0-49") {stringEnterPopUp(label,tag, button);}
-            else if (values == "int to 3dp") { decimalEnterPopUp(label,tag,button) ; }
-            else if (values == "x") { stringEnterPopUp(label,tag, button) ; }
+            try
+            {
+                Button source = (Button)sender;
+                Control parent = source.Parent;
+                Form form = (Form)parent;
+                string final = string.Join("", COMMAND_GLOBAL);
+                CheckedListBox checkedListBox = Controls.Find("checkedListBox1", true).FirstOrDefault() as CheckedListBox;
+                checkedListBox.Items.Add(final, CheckState.Checked);
+                form.Hide();
+            }
+            catch { Console.WriteLine("ERROR in addCommand"); }
             
-            return "ugh"; // needs to be chosen value from popup
         }
+        // adds completed command to checkedListBox
+
+        private void makePopUp(string values, string request,int tag) 
+        {
+            try
+            {
+                Font font = new Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular);
+                Label label = new Label { AutoSize = true, Font = font, Tag = tag };
+                label.Text = request;
+                label.Location = new Point(30, 34);
+                Button button = new Button { Tag = tag };
+                button.Text = "Okay";
+
+                if (values.Substring(0, 1) == "[") { checkListPopUp(label, tag, values, button); }
+                else if (values == "0-49") { integerEnterPopUp(label, tag, button, "preset"); }
+                else if (values == "int to 3dp") { decimalEnterPopUp(label, tag, button); }
+                else if (values == "x") { integerEnterPopUp(label, tag, button, "wait"); }
+            }
+            catch { Console.WriteLine("ERROR in makePopUp"); }
+        }
+        //pass pop up base and call correct pop up type to get user inputs
 
         private void decimalEnterPopUp(Label label, int tag, Button button)
         {
-            TextBox textBox = new TextBox { Tag = tag + "1" };
-            textBox.Location = new Point(30, 50);
-            button.Location = new Point(30, 80);
-            button.Click += new System.EventHandler(setValue);
+            try
+            {
+                TextBox textBox = new TextBox { Tag = tag + "1" };
+                textBox.Location = new Point(30, 50);
+                button.Location = new Point(30, 80);
+                button.Click += new System.EventHandler(setValue);
 
-            Form form = new Form { Tag = tag };
-            form.Text = "Request!";
-            form.Controls.Add(button);
-            form.Controls.Add(label);
-            form.Controls.Add(textBox);
-            //label.Visible = true;
-            form.Show();
+                Form form = new Form { Tag = tag };
+                form.Text = "Request!";
+                form.Controls.Add(button);
+                form.Controls.Add(label);
+                form.Controls.Add(textBox);
+                form.Show();
+            }
+            catch { Console.WriteLine("ERROR in decimalEnterPopUp"); }
+            
         }
+        // make popup specifically expecting a double user input - creates setValue
 
         private void setValue(object sender, EventArgs e)
         {
@@ -450,36 +456,59 @@ namespace Attempt2
                 Button button = (Button)sender;
                 Control parent = button.Parent;
                 string tag = button.Tag.ToString();
-                TextBox textbox = (TextBox)findTextFromTag(parent, tag + "1");
+                TextBox textbox = (TextBox)findObjectFromTag(parent, tag + "1");
                 string choice = textbox.Text;
                 Form form = (Form)parent;
                 form.Hide();
-                //if (!int.TryParse(choice, out _)) { throw new Exception(); } //needs to be string not int
+                if (!Double.TryParse(choice, out _)){throw new Exception();}
                 COMMAND_GLOBAL[Int32.Parse(tag)] = choice;
             }
-            catch { MessageBox.Show("please write a number between 1 and 49"); }
+            catch { MessageBox.Show("please write a number up to 3dp"); }
         }
+        // checks if user input is a double and adds to COMMAND_GLOBAL
 
-        // makes pop up form
-
-
-
-        private void stringEnterPopUp(Label label, int tag, Button button)
+        private void integerEnterPopUp(Label label, int tag, Button button, string type)
         {
             TextBox textBox = new TextBox { Tag = tag + "1" };
             textBox.Location = new Point(30, 50);
             button.Location = new Point(30, 80);
-            button.Click += new System.EventHandler(setNumber);
-
+            
             Form form = new Form { Tag = tag };
             form.Text = "Request!";
             form.Controls.Add(button);
             form.Controls.Add(label);
             form.Controls.Add(textBox);
-            //label.Visible = true;
             form.Show();
 
+            if (type == "preset")
+            {
+                button.Click += new System.EventHandler(setNumber);
+            }
+            else if (type == "wait")
+            {
+                button.Click += new System.EventHandler(setWaitTime);
+            }
         }
+        //make popup specifically expecting integer user input - creates setWaitTime and setNumber
+
+        private void setWaitTime(object sender, EventArgs e)
+        {
+            try
+            {
+                Button button = (Button)sender;
+                Control parent = button.Parent;
+                string tag = button.Tag.ToString();
+                TextBox textbox = (TextBox)findObjectFromTag(parent, tag + "1");
+                string choice = textbox.Text;
+                Form form = (Form)parent;
+                form.Hide();
+                if (!int.TryParse(choice, out _)) { throw new Exception(); }
+                COMMAND_GLOBAL[Int32.Parse(tag)] = choice;
+
+            }
+            catch { MessageBox.Show("please enter an integer number of seconds"); }
+        }
+        // checks if user input is an integer and adds to COMMAND_GLOBAL
 
         private void setNumber(object sender, EventArgs e)
         {
@@ -488,128 +517,157 @@ namespace Attempt2
                 Button button = (Button)sender;
                 Control parent = button.Parent;
                 string tag = button.Tag.ToString();
-                TextBox textbox = (TextBox)findTextFromTag(parent, tag + "1");
+                TextBox textbox = (TextBox)findObjectFromTag(parent, tag + "1");
                 string choice = textbox.Text;
                 Form form = (Form)parent;
                 form.Hide();
-                if (!int.TryParse(choice, out _)) { throw new Exception(); }
+                if (int.TryParse(choice, out _))
+                {
+                    int num = Convert.ToInt32(choice);
+                    if (num <= 0 || num>= 49)
+                    {
+                        throw new Exception();
+                    }
+                }
+                else { throw new Exception(); }
                 COMMAND_GLOBAL[Int32.Parse(tag)] = choice;
 
             }
             catch { MessageBox.Show("please write a number between 1 and 49"); }
-            
-            //button.Text = choice;
-            //return choice;
         }
+        // checks if user input is an integer between 0 and 49 and adds to COMMAND_GLOBAL
 
-        
         private void checkListPopUp(Label label, int tag, string values, Button button)
         {
-            
-            values = values.Substring(1, values.Length - 2);
-            string[] toReplace = values.Split(',');
-            CheckedListBox options = new CheckedListBox { FormattingEnabled = true, Tag = tag + "1" };
-            options.SelectedIndexChanged += new System.EventHandler(onlyOneBox);
-
-            button.Location = new Point(30, 150);
-            button.Click += new System.EventHandler(okayPressed);
-            foreach (string value in toReplace)
+            try
             {
-                options.Items.Add(value);
-            }
-            options.Location = new Point(30, 80);
-            //using (Form form = new Form())
+                values = values.Substring(1, values.Length - 2);
+                string[] toReplace = values.Split(',');
+                CheckedListBox options = new CheckedListBox { FormattingEnabled = true, Tag = tag + "1" };
+                options.SelectedIndexChanged += new System.EventHandler(onlyOneBox);
 
-
-
-            Form form = new Form { Tag = tag };
-            form.Text = "Request!";
-            form.Controls.Add(button);
-            form.Controls.Add(label);
-            form.Controls.Add(options);
-            //label.Visible = true;
-            form.Show();
-        }
-
-        private Control findTextFromTag(Control parentControl, string tagString)
-        {
-            foreach (Control text in parentControl.Controls)
-            {
-                string controlTag = text.Tag.ToString();
-                if (controlTag != null && controlTag == tagString)// Contains(tagString))
+                button.Location = new Point(30, 150);
+                button.Click += new System.EventHandler(okayPressed);
+                foreach (string value in toReplace)
                 {
-                    return text;
+                    options.Items.Add(value);
                 }
-            }
-            return null;
-        }
-        /*
-        private CheckedListBox findCheckedListBox(string tagString)
-        {
-            foreach (Control list in Form2)
-            {
+                options.Location = new Point(30, 80);
 
+
+                Form form = new Form { Tag = tag };
+                form.Text = "Request!";
+                form.Controls.Add(button);
+                form.Controls.Add(label);
+                form.Controls.Add(options);
+                form.Show();
+            }
+            catch { Console.WriteLine("ERROR in checkListPopUp"); }
+            
+        }
+        // makes a pop up so the user can enter their input value (gives choices) 
+
+        private Control findObjectFromTag(Control parentControl, string tagString)
+        {
+            try
+            {
+                foreach (Control text in parentControl.Controls)
+                {
+                    string controlTag = text.Tag.ToString();
+                    if (controlTag != null && controlTag == tagString)
+                    {
+                        return text;
+                    }
+                }
+                return null;
+            }
+            catch { 
+                Console.WriteLine("ERROR in findObjectFromTag"); 
+                return null;
             }
         }
-        */
+        // return an object when given its parent and tag
+        
         private void onlyOneBox(object sender, EventArgs e)
         {
-            CheckedListBox source = (CheckedListBox)sender;
-            int index = source.SelectedIndex;
-            int count = source.Items.Count;
-            
-            for (int i = 0; i < count; i++)
+            try
             {
-                if (index != i)
+                CheckedListBox source = (CheckedListBox)sender;
+                int index = source.SelectedIndex;
+                int count = source.Items.Count;
+
+                for (int i = 0; i < count; i++)
                 {
-                    source.SetItemChecked(i, false);
+                    if (index != i)
+                    {
+                        source.SetItemChecked(i, false);
+                    }
                 }
             }
-            //string choice = source.CheckedItems.ToString();
-            //Console.WriteLine(choice);
+            catch { Console.WriteLine("ERROR in onlyOneBox"); }
         }
-        // Makes sure only one box is chosen in checkListBox
+        //makes sure only one box is checked in checked list box
 
         private void okayPressed(object sender, EventArgs e)
         {
-            Button button = (Button)sender;
-            Control parent = button.Parent;
-            string tag = button.Tag.ToString();
-            string choice = getChoice(tag, parent);
-            //button.Text = choice;
-            //return choice;
+            try
+            {
+                Button button = (Button)sender;
+                Control parent = button.Parent;
+                string tag = button.Tag.ToString();
+                string choice = getChoice(tag, parent);
+            }
+            catch { Console.WriteLine("ERROR in okayPressed"); }
+            
         }
+        // when button pressed call getChoice
 
-        private string getChoice(string tag, Control parent) //gets choice and closes form box
+        private string getChoice(string tag, Control parent) 
         {
-            CheckedListBox checkedList = (CheckedListBox)findTextFromTag(parent, tag + "1");
-            string choice = checkedList.CheckedItems[0].ToString();
-           // Console.WriteLine($" Choice: {choice}");
-           // Console.WriteLine(tag);
-            Form form = (Form)parent;
-            form.Hide();
-            COMMAND_GLOBAL[Int32.Parse(tag)]=choice;
-            return choice;
+            try
+            {
+                CheckedListBox checkedList = (CheckedListBox)findObjectFromTag(parent, tag + "1");
+                string choice = checkedList.CheckedItems[0].ToString();
+                Form form = (Form)parent;
+                form.Hide();
+                COMMAND_GLOBAL[Int32.Parse(tag)] = choice;
+                return choice;
+            }
+            catch { 
+                Console.WriteLine("ERROR in getChoice");
+                return null;
+            }
+            
         }
-           
+        // gets user input and closes form box
 
         private (string[,],string[]) fillInInputArray()
         {
-            string currentDir = Directory.GetCurrentDirectory();
-            string file = Directory.GetCurrentDirectory() + "/PowerSupplyInputs.txt";
-            string[] list = File.ReadAllLines(file);
-            string[,] array = new string[list.Length, 3];
-            string[] key = new string[list.Length];
-            for (int i = 0; i < list.Length; i++)
+            try
             {
-                string[] working = list[i].Split(';');
-                array[i, 0] = working[0];
-                key[i] = working[0];
-                array[i, 1] = working[1];
-                array[i, 2] = working[2];
+                string currentDir = Directory.GetCurrentDirectory();
+                string file = Directory.GetCurrentDirectory() + "/PowerSupplyInputs.txt";
+                string[] list = File.ReadAllLines(file);
+                string[,] array = new string[list.Length, 3];
+                string[] key = new string[list.Length];
+                for (int i = 0; i < list.Length; i++)
+                {
+                    string[] working = list[i].Split(';');
+                    array[i, 0] = working[0];
+                    key[i] = working[0];
+                    array[i, 1] = working[1];
+                    array[i, 2] = working[2];
+                }
+                return (array, key);
             }
-            return (array, key);
-        } //fills array of inputs given command input file
+            catch 
+            { 
+                Console.WriteLine("ERROR in fillInInputArray");
+                return (null, null);
+            }
+            
+        } 
+        //fills array of inputs given command input file
 
         private void writeToFile(string fileName, string command)
         {
@@ -624,45 +682,44 @@ namespace Attempt2
 
                 }
             }
-            catch { }
+            catch { Console.WriteLine("ERROR in writeToFile"); }
         }
-        private void Form2_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        
-      
+        //writes given text to a given file name in the current directory
 
         private void resetButtonClick(object sender, EventArgs e)
         {
-            // clear list of checked list box
-            CheckedListBox checkedListBox = Controls.Find("checkedListBox1", true).FirstOrDefault() as CheckedListBox;
-            while (checkedListBox.CheckedItems.Count > 0)
+            try
             {
-                checkedListBox.Items.RemoveAt(checkedListBox.CheckedIndices[0]);
+                CheckedListBox checkedListBox = Controls.Find("checkedListBox1", true).FirstOrDefault() as CheckedListBox;
+                while (checkedListBox.CheckedItems.Count > 0)
+                {
+                    checkedListBox.Items.RemoveAt(checkedListBox.CheckedIndices[0]);
+                }
             }
+            catch { Console.WriteLine("ERROR in resetCLickButton"); }            
         }
-
-       
+        //removes all checked boxes in checkedListBox
 
         private void runButtonClick(object sender, EventArgs e)
         {
-            CheckedListBox checkedListBox = Controls.Find("checkedListBox1", true).FirstOrDefault() as CheckedListBox;
-            string myfile = Directory.GetCurrentDirectory() + "/runningFile.txt";
-            File.WriteAllText(@myfile, "");
-
-            if (checkedListBox.CheckedItems.Count != 0)
+            try
             {
-                for (int x = 0; x < checkedListBox.CheckedItems.Count; x++)
-                {
-                    writeToFile("runningFile.txt", checkedListBox.CheckedItems[x].ToString());
-                }
-                runCommandList();
-            }
+                CheckedListBox checkedListBox = Controls.Find("checkedListBox1", true).FirstOrDefault() as CheckedListBox;
+                string myfile = Directory.GetCurrentDirectory() + "/runningFile.txt";
+                File.WriteAllText(@myfile, "");
 
-            
+                if (checkedListBox.CheckedItems.Count != 0)
+                {
+                    for (int x = 0; x < checkedListBox.CheckedItems.Count; x++)
+                    {
+                        writeToFile("runningFile.txt", checkedListBox.CheckedItems[x].ToString());
+                    }
+                    runCommandList();
+                }
+            }
+            catch { Console.WriteLine("ERROR in runButtonClick"); }
         }
+        // writes all checked commands into a text file and calls the correct python file
 
 
         // IRRELEVANT
@@ -674,8 +731,11 @@ namespace Attempt2
         {
 
         }
-
         private void listOfCommands(object sender, EventArgs e)
+        {
+
+        }
+        private void Form2_Load(object sender, EventArgs e)
         {
 
         }

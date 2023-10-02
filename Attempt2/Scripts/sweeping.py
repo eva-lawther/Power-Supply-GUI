@@ -11,7 +11,7 @@ import time
 
 def devices():
     rm = pyvisa.ResourceManager()
-    print("Resources detected\n{}\n".format(rm.list_resources()))
+    #print("Resources detected\n{}\n".format(rm.list_resources()))
     supply = rm.open_resource('ASRL13::INSTR') # resource id for power supply   
     dmm = rm.open_resource('ASRL6::INSTR')    # resource id for digital multi meter
     # set digital multimeter to dc voltage 
@@ -100,7 +100,7 @@ def main():
     try:
         supply, dmm, rm = devices()  
     except:
-        print("turn machines on dummy")
+        print("turn machines on")
     
     channel, variable, direction, start, end, increment, constant = getValues()
 
@@ -119,6 +119,13 @@ def main():
     
     set.end() 
     rm.close()
+    
+    '''
+    data_out = [ fm.JsonDataFormat(fileLocation, 1, [1])]
+    if fm.program_out_script_in_json_buffer != False:
+        data_out = data_out + fm.program_out_script_in_json_buffer
+        fm.export_json(".dataReady.json", data_out)
+    '''
 
     print("your test data is stored at {}".format(fileLocation))
     

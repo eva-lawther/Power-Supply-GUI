@@ -1,7 +1,15 @@
 [
   {
-    "Id": "runCommandList.py",
-    "Length": 0,
-    "Values": []
+    "Id": "sweeping.py",
+    "Length": 7,
+    "Values": [
+      1,
+      0,
+      1,
+      0,
+      1,
+      1,
+      0
+    ]
   }
 ]

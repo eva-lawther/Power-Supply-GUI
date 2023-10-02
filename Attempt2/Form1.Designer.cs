@@ -113,6 +113,7 @@ namespace Attempt2
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.createTestListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupBox3.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -163,6 +164,7 @@ namespace Attempt2
             this.groupBox8.Size = new System.Drawing.Size(768, 231);
             this.groupBox8.TabIndex = 14;
             this.groupBox8.TabStop = false;
+            this.groupBox8.Tag = "4;Box";
             this.groupBox8.Text = "Incrementation";
             // 
             // label14
@@ -172,6 +174,7 @@ namespace Attempt2
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(98, 25);
             this.label14.TabIndex = 11;
+            this.label14.Tag = "label";
             this.label14.Text = "Constant";
             // 
             // textBox21
@@ -212,6 +215,7 @@ namespace Attempt2
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(106, 25);
             this.label15.TabIndex = 7;
+            this.label15.Tag = "label";
             this.label15.Text = "Increment";
             // 
             // textBox22
@@ -230,6 +234,7 @@ namespace Attempt2
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(88, 25);
             this.label16.TabIndex = 5;
+            this.label16.Tag = "label";
             this.label16.Text = "Set End";
             // 
             // textBox23
@@ -248,6 +253,7 @@ namespace Attempt2
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(95, 25);
             this.label17.TabIndex = 3;
+            this.label17.Tag = "label";
             this.label17.Text = "Set Start";
             // 
             // textBox24
@@ -505,6 +511,7 @@ namespace Attempt2
             this.groupBox5.Size = new System.Drawing.Size(768, 231);
             this.groupBox5.TabIndex = 13;
             this.groupBox5.TabStop = false;
+            this.groupBox5.Tag = "1;Box";
             this.groupBox5.Text = "Incrementation";
             this.groupBox5.Enter += new System.EventHandler(this.groupBox5_Enter);
             // 
@@ -515,6 +522,7 @@ namespace Attempt2
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(98, 25);
             this.label5.TabIndex = 11;
+            this.label5.Tag = "label";
             this.label5.Text = "Constant";
             // 
             // textBox12
@@ -555,6 +563,7 @@ namespace Attempt2
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(106, 25);
             this.label4.TabIndex = 7;
+            this.label4.Tag = "label";
             this.label4.Text = "Increment";
             // 
             // textBox11
@@ -573,6 +582,7 @@ namespace Attempt2
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 25);
             this.label3.TabIndex = 5;
+            this.label3.Tag = "label";
             this.label3.Text = "Set End";
             // 
             // textBox10
@@ -591,6 +601,7 @@ namespace Attempt2
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(95, 25);
             this.label1.TabIndex = 3;
+            this.label1.Tag = "label";
             this.label1.Text = "Set Start";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
@@ -709,6 +720,7 @@ namespace Attempt2
             this.groupBox6.Size = new System.Drawing.Size(768, 231);
             this.groupBox6.TabIndex = 14;
             this.groupBox6.TabStop = false;
+            this.groupBox6.Tag = "2;Box";
             this.groupBox6.Text = "Incrementation";
             // 
             // label6
@@ -718,6 +730,7 @@ namespace Attempt2
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(98, 25);
             this.label6.TabIndex = 11;
+            this.label6.Tag = "label";
             this.label6.Text = "Constant";
             // 
             // textBox13
@@ -758,6 +771,7 @@ namespace Attempt2
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(106, 25);
             this.label7.TabIndex = 7;
+            this.label7.Tag = "label";
             this.label7.Text = "Increment";
             // 
             // textBox14
@@ -776,6 +790,7 @@ namespace Attempt2
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(88, 25);
             this.label8.TabIndex = 5;
+            this.label8.Tag = "label";
             this.label8.Text = "Set End";
             // 
             // textBox15
@@ -794,6 +809,7 @@ namespace Attempt2
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(95, 25);
             this.label9.TabIndex = 3;
+            this.label9.Tag = "label";
             this.label9.Text = "Set Start";
             // 
             // textBox16
@@ -850,6 +866,7 @@ namespace Attempt2
             this.groupBox7.Size = new System.Drawing.Size(768, 231);
             this.groupBox7.TabIndex = 14;
             this.groupBox7.TabStop = false;
+            this.groupBox7.Tag = "3;Box";
             this.groupBox7.Text = "Incrementation";
             // 
             // label10
@@ -859,6 +876,7 @@ namespace Attempt2
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(98, 25);
             this.label10.TabIndex = 11;
+            this.label10.Tag = "label";
             this.label10.Text = "Constant";
             // 
             // textBox17
@@ -899,6 +917,7 @@ namespace Attempt2
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(106, 25);
             this.label11.TabIndex = 7;
+            this.label11.Tag = "label";
             this.label11.Text = "Increment";
             // 
             // textBox18
@@ -917,6 +936,7 @@ namespace Attempt2
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(88, 25);
             this.label12.TabIndex = 5;
+            this.label12.Tag = "label";
             this.label12.Text = "Set End";
             // 
             // textBox19
@@ -935,6 +955,7 @@ namespace Attempt2
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(95, 25);
             this.label13.TabIndex = 3;
+            this.label13.Tag = "label";
             this.label13.Text = "Set Start";
             // 
             // textBox20
@@ -982,7 +1003,7 @@ namespace Attempt2
             this.createTestListToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1690, 42);
+            this.menuStrip1.Size = new System.Drawing.Size(1690, 40);
             this.menuStrip1.TabIndex = 15;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -990,27 +1011,31 @@ namespace Attempt2
             // mainControlsToolStripMenuItem
             // 
             this.mainControlsToolStripMenuItem.Name = "mainControlsToolStripMenuItem";
-            this.mainControlsToolStripMenuItem.Size = new System.Drawing.Size(180, 38);
+            this.mainControlsToolStripMenuItem.Size = new System.Drawing.Size(180, 36);
             this.mainControlsToolStripMenuItem.Text = "Main controls";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 36);
             // 
             // createTestListToolStripMenuItem
             // 
             this.createTestListToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator3});
             this.createTestListToolStripMenuItem.Name = "createTestListToolStripMenuItem";
-            this.createTestListToolStripMenuItem.Size = new System.Drawing.Size(186, 38);
+            this.createTestListToolStripMenuItem.Size = new System.Drawing.Size(186, 36);
             this.createTestListToolStripMenuItem.Text = "Create test list";
             this.createTestListToolStripMenuItem.Click += new System.EventHandler(this.createTestListToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(356, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(116, 6);
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
             // Form1
             // 
@@ -1135,6 +1160,7 @@ namespace Attempt2
         private ToolStripMenuItem createTestListToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripSeparator toolStripSeparator3;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

@@ -10,45 +10,55 @@ class JsonDataFormat:
               else:
                      self.Values = values
 
+SKIP = True
+
 def export_json(file, list_of_jsons):
        # Attempt to open and read the file.
-       try:
-              f = open(file, 'r+')
-       except:
-              print("Can't open and read the export file!")
-              return
-       # Read in the existing data from the file.
-       try:
-              existing_data = json.load(f)
-              # Check through existing data and either 
-              # overwrite or append new elements.
-              for object_out in list_of_jsons:
-                     i = -1
-                     match = False
-                     for existing_object in existing_data:
-                            i = i + 1
-                            if (object_out.Id == existing_object['Id']):
-                                   existing_data[i] = object_out.__dict__
-                                   match = True
-                                   break
-                     if match == False:
-                            existing_data.append(object_out.__dict__)
-              data_out = existing_data
-       except:
-              data_out = []
-              for object_out in list_of_jsons:
-                    data_out.append(object_out.__dict__) 
-       # Write out the JSON file.
-       json_object = json.dumps(data_out, indent=2)
-       f.close()
+        if not SKIP:
+            print("go away")
+            '''
+            try:
+                  f = open(file, 'r+')
+            except:
+                  print("Can't open and read the export file!")
+                  return
+           # Read in the existing data from the file.
+           try:
+                   existing_data = json.load(f)
+                    # Check through existing data and either 
+                    # overwrite or append new elements.
+                   for object_out in list_of_jsons:
+                           i = -1
+                           match = False
+                           for existing_object in existing_data:
+                               i = i + 1
+                               if (object_out.Id == existing_object['Id']):
+                                        existing_data[i] = object_out.__dict__
+                                        match = True
+                                        break
+                           if match == False:
+                                existing_data.append(object_out.__dict__)
+                   data_out = existing_data
+           except:
+                   data_out = []
+                   for object_out in list_of_jsons:
+                        data_out.append(object_out.__dict__) 
+            '''
+        else:
+            data_out = []
+            for object_out in list_of_jsons:
+                    data_out.append(object_out.__dict__)    
+        # Write out the JSON file.
+        json_object = json.dumps(data_out, indent=2)
+        f.close()
        # Attempt to open and write over the file.
-       try:
-              f = open(file, 'w')
-       except:
-              print("Can't open and write the export file!")
-              return
-       f.write(json_object)
-       f.close()
+        try:
+            f = open(file, 'w')
+        except:
+            print("Can't open and write the export file!")
+            return
+        f.write(json_object)
+        f.close()
 
 def import_json(file):
        # Attempt to open and read the file.

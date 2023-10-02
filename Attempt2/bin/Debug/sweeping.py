@@ -119,6 +119,13 @@ def main():
     
     set.end() 
     rm.close()
+    
+    '''
+    data_out = [ fm.JsonDataFormat(fileLocation, 1, [1])]
+    if fm.program_out_script_in_json_buffer != False:
+        data_out = data_out + fm.program_out_script_in_json_buffer
+        fm.export_json(".dataReady.json", data_out)
+    '''
 
     print("your test data is stored at {}".format(fileLocation))
     
