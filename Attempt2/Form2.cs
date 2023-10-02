@@ -55,84 +55,7 @@ namespace Attempt2
 
         
 
-        public string PopulatePowerShellScript(string psScriptName, string scriptExt,
-                                           string scriptCommand, string[] exclusions)
-        {
-            // Begin by finding the Python (.py) scripts in the working directory.
-            string[] paths = Directory.GetFiles(Directory.GetCurrentDirectory());
-            // Generate a list of scripts to run. 
-            List<string> scriptsToRun = new List<string>();
-            foreach (string path in paths)
-            {
-                string file = Path.GetFileName(path);
-                if (exclusions != null && exclusions.Contains(file))
-                {
-                    continue;
-                }
-                else if (Path.GetExtension(file) == scriptExt)
-                {
-                    scriptsToRun.Add(file);
-                }
-                else
-                {
-                    continue;
-                }
-            }
-            // Generate a list of strings to insert into the PS script.
-            List<string> commandsToRun = new List<string>();
-            foreach (string script in scriptsToRun)
-            {
-                string command = "\n\t'" + script + "' {" + scriptCommand + " " + script + "}";
-                commandsToRun.Add(command);
-            }
-            // Open the PS script to be populated.
-            string psScriptText;
-            try
-            {
-                // Lock the file
-                FileStream fs = new FileStream(psScriptName, FileMode.Open,
-                                                FileAccess.ReadWrite, FileShare.Read);
-                // Try read-in the existing script.
-                try
-                {
-                    using (StreamReader r = new StreamReader(fs))
-                    {
-                        psScriptText = r.ReadToEnd();
-                        string insertPointRed = "Switch";
-                        string insertPointAll = "Switch ($selectscript)\n{   ";
-                        int index = psScriptText.IndexOf(insertPointRed) + insertPointAll.Length;
-                        foreach (string command in commandsToRun)
-                        {
-                            int offset = command.Length;
-                            psScriptText = psScriptText.Insert(index, command);
-                            index += offset;
-                        }
-                    }
-                }
-                catch
-                {
-                    return "File empty or couldn't find insertion point!";
-                }
-                try
-                {
-                    using (StreamWriter w = new StreamWriter(psScriptName))
-                    {
-                        w.Write(psScriptText);
-                    }
-                }
-                catch
-                {
-                    return "File couldn't be written to";
-                }
-                fs.Close();
-            }
-            catch
-            {
-                return "Couldn't open file!";
-            }
-            return null;
-        }
-
+        
         public string RunPowerShellScript(string psScript, string[] arguments)
         {
             // Concatenate arguments into a single string.
@@ -166,26 +89,6 @@ namespace Attempt2
             }
             // Return the resultant output string.
             return stringBuilder.ToString();
-        }
-
-
-        public void ImportAllScripts(string scriptsDir)
-        {
-            // Determine the number of slashes.
-            if (!scriptsDir.EndsWith("/")) scriptsDir += "/";
-            uint numberOfSlashes = (uint)(scriptsDir.Split('/')).Length;
-            // Find the scripts directory and copy each file one-by-one
-            // to the working directory.
-            string workingDir = Directory.GetCurrentDirectory() + "/";
-            string[] allScripts = Directory.GetFileSystemEntries(scriptsDir);
-            foreach (string script in allScripts)
-            {
-                // Extract just the file name.
-                string fileName = script.Split('/')[numberOfSlashes - 1];
-                // Copy it over.
-
-                File.Copy(scriptsDir + fileName, workingDir + fileName, true);
-            }
         }
 
 
@@ -518,7 +421,8 @@ namespace Attempt2
 
             if (values.Substring(0,1) == "[") {checkListPopUp(label, tag, values, button);}
             else if (values == "0-49") {stringEnterPopUp(label,tag, button);}
-            else { decimalEnterPopUp(label,tag,button) ; }
+            else if (values == "int to 3dp") { decimalEnterPopUp(label,tag,button) ; }
+            else if (values == "x") { stringEnterPopUp(label,tag, button) ; }
             
             return "ugh"; // needs to be chosen value from popup
         }
@@ -722,35 +626,53 @@ namespace Attempt2
             }
             catch { }
         }
-
-        
-        /*
-        public static void Main(string[] args)
-        {
-            Command command = new Command();
-        }*/
-       
-        // Irrelevant
-        
         private void Form2_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
+      
 
         private void resetButtonClick(object sender, EventArgs e)
         {
             // clear list of checked list box
+            CheckedListBox checkedListBox = Controls.Find("checkedListBox1", true).FirstOrDefault() as CheckedListBox;
+            while (checkedListBox.CheckedItems.Count > 0)
+            {
+                checkedListBox.Items.RemoveAt(checkedListBox.CheckedIndices[0]);
+            }
+        }
+
+       
+
+        private void runButtonClick(object sender, EventArgs e)
+        {
+            CheckedListBox checkedListBox = Controls.Find("checkedListBox1", true).FirstOrDefault() as CheckedListBox;
+            string myfile = Directory.GetCurrentDirectory() + "/runningFile.txt";
+            File.WriteAllText(@myfile, "");
+
+            if (checkedListBox.CheckedItems.Count != 0)
+            {
+                for (int x = 0; x < checkedListBox.CheckedItems.Count; x++)
+                {
+                    writeToFile("runningFile.txt", checkedListBox.CheckedItems[x].ToString());
+                }
+                runCommandList();
+            }
+
+            
+        }
+
+
+        // IRRELEVANT
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
 
         private void listOfCommands(object sender, EventArgs e)
@@ -758,27 +680,5 @@ namespace Attempt2
 
         }
 
-        private void runButtonClick(object sender, EventArgs e)
-        {
-            CheckedListBox checkedListBox = Controls.Find("checkedListBox1", true).FirstOrDefault() as CheckedListBox;
-
-            // read through all checked values in checked list box
-            //for all checks in checkedListBox
-            if (checkedListBox.CheckedItems.Count != 0)
-            {
-                // If so, loop through all checked items and print results.  
-                //string[] s = new string[checkedListBox1.CheckedItems.Count];
-                for (int x = 0; x < checkedListBox.CheckedItems.Count; x++)
-                {
-                    //s[0] = checkedListBox1.CheckedItems[x].ToString();
-                    writeToFile("runningFile.txt", checkedListBox.CheckedItems[x].ToString());
-                }
-                //write to file
-                runCommandList();
-                // call python file and send link to command file
-            }
-
-            
-        }   
     }
 }

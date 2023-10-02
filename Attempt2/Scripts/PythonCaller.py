@@ -10,6 +10,7 @@ import numpy as np
 import sed_json as fm #file manager ### C# Interaction
 import sweeping
 import configuration
+import runCommandList
 
 
 
@@ -27,7 +28,7 @@ elif(fileCall.Id == "configuration.py"):
     configuration.main()
     
 elif(fileCall.Id == "runCommandList.py"):
-    configuration.main()
+    runCommandList.main()
     
 #elif(fileCall.Id == )
     
