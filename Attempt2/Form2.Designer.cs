@@ -31,8 +31,10 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -58,6 +60,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkedListBox1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(401, 56);
             this.groupBox1.Name = "groupBox1";
@@ -67,6 +70,16 @@
             this.groupBox1.Text = "commandList";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Location = new System.Drawing.Point(15, 50);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(356, 68);
+            this.checkedListBox1.TabIndex = 0;
+            this.checkedListBox1.Tag = "MAIN";
+            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.listOfCommands);
+            // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(58, 145);
@@ -75,6 +88,7 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "Run";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.runButtonClick);
             // 
             // button3
             // 
@@ -84,7 +98,7 @@
             this.button3.TabIndex = 4;
             this.button3.Text = "Reset";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.Click += new System.EventHandler(this.resetButtonClick);
             // 
             // Form2
             // 
@@ -101,6 +115,7 @@
             this.Name = "Form2";
             this.Text = "PowerSupplyGUI";
             this.Load += new System.EventHandler(this.Form2_Load);
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -112,5 +127,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
     }
 }
