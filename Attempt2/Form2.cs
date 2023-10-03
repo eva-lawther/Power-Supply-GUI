@@ -246,19 +246,50 @@ namespace Attempt2
                     COMMAND_GLOBAL[k] = null;
                 }
                 string currentDir = Directory.GetCurrentDirectory();
-                string commandFolder = @currentDir + "/PowerSupplyCommands.txt";
+                string commandFolder = @currentDir + "/Instruments.txt";//"/PowerSupplyCommands.txt";
                 string[] commandFiles = File.ReadAllLines(commandFolder);
                 foreach (string file in commandFiles)
                 {
                     contextMenuStrip.Items.Add(file);
                 }
-                contextMenuStrip.ItemClicked += new ToolStripItemClickedEventHandler(itemClick);
+                contextMenuStrip.ItemClicked += new ToolStripItemClickedEventHandler(listCategories);// itemClick);
                 contextMenuStrip.Show(button1, new Point(0, button1.Height));
             }
             catch { Console.WriteLine("Error with new command button: ERROR in newCommandButton"); }
             
         }  
-        // Make command button that lists power supply categories
+        // Make command button that lists instruments//power supply categories
+
+        private void listCategories(object sender, ToolStripItemClickedEventArgs e)
+        {
+            try
+            {
+                string instrument = e.ClickedItem.Text;
+
+                ContextMenuStrip commandList = new ContextMenuStrip();
+                string currentDir = Directory.GetCurrentDirectory();
+                string commandFolder = "";
+                if (instrument == "PowerSupplyCommands")
+                {
+                    commandFolder = @currentDir + "/PowerSupplyCommands.txt";
+                }
+                else
+                {
+                    commandFolder = @currentDir + "/MultiMeterCommands.txt";
+                }
+                
+
+                string[] commandFiles = File.ReadAllLines(commandFolder);
+                foreach (string file in commandFiles)
+                {
+                    commandList.Items.Add(file);
+                }
+                commandList.ItemClicked += new ToolStripItemClickedEventHandler(itemClick);// itemClick);
+                commandList.Show(button1, new Point(0, button1.Height));
+                
+            }
+            catch { Console.WriteLine("Cannot find category file: ERROR in itemClick"); }
+        }
 
         private void itemClick(object sender, ToolStripItemClickedEventArgs e) 
         {
@@ -267,7 +298,6 @@ namespace Attempt2
                 string fileName = e.ClickedItem.Text;
 
                 ContextMenuStrip commandList = new ContextMenuStrip();
-                string currentDir = Directory.GetCurrentDirectory();
                 //string commandFile =  currentDir + "/" + fileName + ".txt";
                 string[] fileLines = textFileToArray(fileName);
                 string[,] commands = new string[fileLines.Length, 2];
@@ -276,7 +306,7 @@ namespace Attempt2
                 {
                     commandList.Items.Add(fileLines[i].Split(';')[1]);
                 }
-                string placeHolder = currentDir + "/fileName.txt";
+                string placeHolder = Directory.GetCurrentDirectory() + "/fileName.txt";
                 File.WriteAllText(placeHolder, fileName);
                 commandList.Show(button1, new Point(0, button1.Height));
                 commandList.ItemClicked += commandChosen;
@@ -362,7 +392,11 @@ namespace Attempt2
             foreach (string element in commandString)
             {
                 string chosen = element;
-                if (element != " ")
+                if (element.ToLower() == "auto range" )
+                {
+                    chosen = "";
+                }
+                else if (element != " ")
                 {
                     
 
@@ -459,8 +493,9 @@ namespace Attempt2
                 TextBox textbox = (TextBox)findObjectFromTag(parent, tag + "1");
                 string choice = textbox.Text;
                 Form form = (Form)parent;
-                form.Hide();
+                
                 if (!Double.TryParse(choice, out _)){throw new Exception();}
+                form.Hide();
                 COMMAND_GLOBAL[Int32.Parse(tag)] = choice;
             }
             catch { MessageBox.Show("please write a number up to 3dp"); }
@@ -501,9 +536,10 @@ namespace Attempt2
                 TextBox textbox = (TextBox)findObjectFromTag(parent, tag + "1");
                 string choice = textbox.Text;
                 Form form = (Form)parent;
-                form.Hide();
+                
                 if (!int.TryParse(choice, out _)) { throw new Exception(); }
                 COMMAND_GLOBAL[Int32.Parse(tag)] = choice;
+                form.Hide();
 
             }
             catch { MessageBox.Show("please enter an integer number of seconds"); }
@@ -520,7 +556,7 @@ namespace Attempt2
                 TextBox textbox = (TextBox)findObjectFromTag(parent, tag + "1");
                 string choice = textbox.Text;
                 Form form = (Form)parent;
-                form.Hide();
+                
                 if (int.TryParse(choice, out _))
                 {
                     int num = Convert.ToInt32(choice);
@@ -531,6 +567,7 @@ namespace Attempt2
                 }
                 else { throw new Exception(); }
                 COMMAND_GLOBAL[Int32.Parse(tag)] = choice;
+                form.Hide();
 
             }
             catch { MessageBox.Show("please write a number between 1 and 49"); }
@@ -546,7 +583,7 @@ namespace Attempt2
                 CheckedListBox options = new CheckedListBox { FormattingEnabled = true, Tag = tag + "1" };
                 options.SelectedIndexChanged += new System.EventHandler(onlyOneBox);
 
-                button.Location = new Point(30, 150);
+                button.Location = new Point(30, 200);
                 button.Click += new System.EventHandler(okayPressed);
                 foreach (string value in toReplace)
                 {
@@ -646,7 +683,7 @@ namespace Attempt2
             try
             {
                 string currentDir = Directory.GetCurrentDirectory();
-                string file = Directory.GetCurrentDirectory() + "/PowerSupplyInputs.txt";
+                string file = Directory.GetCurrentDirectory() + "/InstrumentInputs.txt";
                 string[] list = File.ReadAllLines(file);
                 string[,] array = new string[list.Length, 3];
                 string[] key = new string[list.Length];

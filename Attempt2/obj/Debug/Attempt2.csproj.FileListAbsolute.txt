@@ -105,3 +105,4 @@ C:\Users\EvaLawther\WP3\repos\Power-Supply-GUI\Attempt2\obj\Debug\Attempt2.cspro
 C:\Users\EvaLawther\WP3\repos\Power-Supply-GUI\Attempt2\obj\Debug\Attempt2.exe
 C:\Users\EvaLawther\WP3\repos\Power-Supply-GUI\Attempt2\obj\Debug\Attempt2.pdb
 C:\Users\EvaLawther\WP3\repos\Power-Supply-GUI\Attempt2\obj\Debug\Attempt2.Form2.resources
+C:\Users\EvaLawther\WP3\repos\Power-Supply-GUI\Attempt2\obj\Debug\Attempt2.Form3.resources

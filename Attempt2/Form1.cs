@@ -154,10 +154,10 @@ namespace Attempt2
             return output;
         }  // Call python class
         */
-        private void sweeping(int channel, string type, string way, double start, double end, double increment, double constant)
+        private void sweeping(int channel, string way, double start, double end, double increment, double constant)
         {
-            int variable, direction;
-            if (type == "Voltage") { variable = 0; } else { variable = 1; }
+            int variable = 0, direction;
+            //if (type == "Voltage") { variable = 0; } else { variable = 1; }
             if (way == "up") { direction = 0; } else { direction = 1; }
 
 
@@ -569,7 +569,7 @@ namespace Attempt2
                 TextBox textBox;
 
                 // get change value
-                string variable = variableChoice(parent, elementTag); 
+                //string variable = variableChoice(parent, elementTag); 
 
                 // get up down
                 string upDown = directionChoice(parent,elementTag);
@@ -610,7 +610,7 @@ namespace Attempt2
                 catch { MessageBox.Show("Constant needs to be set to a number"); }
 
                 // send to code
-                sweeping(channel, variable, upDown, start, end, increment, constant);
+                sweeping(channel, upDown, start, end, increment, constant);
             }
             catch { Console.WriteLine("Error with start button"); }
         }
@@ -684,6 +684,16 @@ namespace Attempt2
         }
         // call form2 when clicked
 
+        private void drawGraphFromDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Form3 diy = new Form3();
+                diy.Show();
+            }
+            catch { Console.WriteLine("ERROR in drawGraphFromDataToolStripMenuItem_Click "); }
+        }
+
 
         // IRRELEVANT
 
@@ -712,7 +722,10 @@ namespace Attempt2
 
         }
 
+        private void textBox25_TextChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 }
 

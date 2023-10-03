@@ -1,9 +1,9 @@
 # Take a csv file and plot it using matplotlib
 
-import matplotlib as mp
-
-
+import matplotlib.pyplot as mp
+import numpy as np
 import pandas as pd
+
 mp.plyplot.rcParams["figure.figsize"] = [7.00, 3.50]
 mp.plyplot.rcParams["figure.autolayout"] = True
 columns = ["Output", "Input"]

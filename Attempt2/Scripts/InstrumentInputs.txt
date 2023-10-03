@@ -9,3 +9,12 @@ NRFM;[0,1,2,3];choose(0 to 3) given [0 = None. 1 = Mode1. 2 = Mode2. 3 = Mode3.]
 CPDT;[QUICK, NEVER, DELAY];choose Quick, Never or Delay
 NRFN;0-49; Choose preset (0-49): Enter number
 x;x;chooose how many seconds to wait
+SPEED;[SLOW,FAST];<SLOW> sets the sampling speed to 4SPS, <FAST> sets the sampling speed to 20SP (sampling speed)
+WIR;[2W,4W];set measurement connection to 2 or 4 wire
+RANGE;[100MV,100MV,10V,100V,1000V,auto range];set voltage range
+ARANGE;[100MV,1000MV;10V,100V,750V,auto range];set voltage range
+AMPRANGE;[1MA,100MA,1000MA,10A,AUTO RANGE];set mA range
+BPD;[100,1000,10K,100K,1000K,10M,auto range];set range
+TPC;[PT100,PT1000];set RTD probe type
+CAP;[10NF,100NF,1UF,10UF,100UF,auto range];set range
+FREQ;[100HZ,1000HZ,10KHZ,100KHZ,auto range];set range

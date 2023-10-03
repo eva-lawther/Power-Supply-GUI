@@ -33,6 +33,7 @@ namespace Attempt2
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.textBox28 = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.textBox21 = new System.Windows.Forms.TextBox();
             this.button15 = new System.Windows.Forms.Button();
@@ -44,7 +45,6 @@ namespace Attempt2
             this.label17 = new System.Windows.Forms.Label();
             this.textBox24 = new System.Windows.Forms.TextBox();
             this.checkedListBox7 = new System.Windows.Forms.CheckedListBox();
-            this.checkedListBox8 = new System.Windows.Forms.CheckedListBox();
             this.button6 = new System.Windows.Forms.Button();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.button7 = new System.Windows.Forms.Button();
@@ -64,6 +64,7 @@ namespace Attempt2
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.textBox25 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.button10 = new System.Windows.Forms.Button();
@@ -75,7 +76,6 @@ namespace Attempt2
             this.label1 = new System.Windows.Forms.Label();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.checkedListBox2 = new System.Windows.Forms.CheckedListBox();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.button8 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -83,6 +83,7 @@ namespace Attempt2
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.textBox26 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox13 = new System.Windows.Forms.TextBox();
             this.button11 = new System.Windows.Forms.Button();
@@ -94,8 +95,8 @@ namespace Attempt2
             this.label9 = new System.Windows.Forms.Label();
             this.textBox16 = new System.Windows.Forms.TextBox();
             this.checkedListBox3 = new System.Windows.Forms.CheckedListBox();
-            this.checkedListBox4 = new System.Windows.Forms.CheckedListBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.textBox27 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.textBox17 = new System.Windows.Forms.TextBox();
             this.button13 = new System.Windows.Forms.Button();
@@ -107,12 +108,12 @@ namespace Attempt2
             this.label13 = new System.Windows.Forms.Label();
             this.textBox20 = new System.Windows.Forms.TextBox();
             this.checkedListBox5 = new System.Windows.Forms.CheckedListBox();
-            this.checkedListBox6 = new System.Windows.Forms.CheckedListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.mainControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.createTestListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.drawGraphFromDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupBox3.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -138,15 +139,16 @@ namespace Attempt2
             this.groupBox3.Controls.Add(this.button7);
             this.groupBox3.Controls.Add(this.textBox7);
             this.groupBox3.Controls.Add(this.textBox8);
-            this.groupBox3.Location = new System.Drawing.Point(883, 592);
+            this.groupBox3.Location = new System.Drawing.Point(882, 640);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(768, 483);
+            this.groupBox3.Size = new System.Drawing.Size(768, 524);
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Channel4";
             // 
             // groupBox8
             // 
+            this.groupBox8.Controls.Add(this.textBox28);
             this.groupBox8.Controls.Add(this.label14);
             this.groupBox8.Controls.Add(this.textBox21);
             this.groupBox8.Controls.Add(this.button15);
@@ -158,14 +160,24 @@ namespace Attempt2
             this.groupBox8.Controls.Add(this.label17);
             this.groupBox8.Controls.Add(this.textBox24);
             this.groupBox8.Controls.Add(this.checkedListBox7);
-            this.groupBox8.Controls.Add(this.checkedListBox8);
-            this.groupBox8.Location = new System.Drawing.Point(0, 252);
+            this.groupBox8.Location = new System.Drawing.Point(0, 244);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(768, 231);
+            this.groupBox8.Size = new System.Drawing.Size(768, 280);
             this.groupBox8.TabIndex = 14;
             this.groupBox8.TabStop = false;
             this.groupBox8.Tag = "4;Box";
-            this.groupBox8.Text = "Incrementation";
+            this.groupBox8.Text = "SweepingVoltage";
+            // 
+            // textBox28
+            // 
+            this.textBox28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox28.Location = new System.Drawing.Point(25, 41);
+            this.textBox28.Multiline = true;
+            this.textBox28.Name = "textBox28";
+            this.textBox28.Size = new System.Drawing.Size(231, 109);
+            this.textBox28.TabIndex = 13;
+            this.textBox28.Tag = "4;Text";
+            this.textBox28.Text = "Set start and end voltage (v) values, the increment of change and amps value";
             // 
             // label14
             // 
@@ -188,7 +200,7 @@ namespace Attempt2
             // 
             // button15
             // 
-            this.button15.Location = new System.Drawing.Point(515, 135);
+            this.button15.Location = new System.Drawing.Point(515, 156);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(158, 64);
             this.button15.TabIndex = 9;
@@ -199,7 +211,7 @@ namespace Attempt2
             // 
             // button16
             // 
-            this.button16.Location = new System.Drawing.Point(346, 135);
+            this.button16.Location = new System.Drawing.Point(346, 156);
             this.button16.Name = "button16";
             this.button16.Size = new System.Drawing.Size(158, 64);
             this.button16.TabIndex = 8;
@@ -271,25 +283,12 @@ namespace Attempt2
             this.checkedListBox7.Items.AddRange(new object[] {
             "Increase",
             "Decrease"});
-            this.checkedListBox7.Location = new System.Drawing.Point(26, 135);
+            this.checkedListBox7.Location = new System.Drawing.Point(26, 156);
             this.checkedListBox7.Name = "checkedListBox7";
             this.checkedListBox7.Size = new System.Drawing.Size(246, 88);
             this.checkedListBox7.TabIndex = 1;
             this.checkedListBox7.Tag = "4;3;chooseDirection";
             this.checkedListBox7.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
-            // 
-            // checkedListBox8
-            // 
-            this.checkedListBox8.FormattingEnabled = true;
-            this.checkedListBox8.Items.AddRange(new object[] {
-            "Change Voltage",
-            "Change Amplitude"});
-            this.checkedListBox8.Location = new System.Drawing.Point(26, 42);
-            this.checkedListBox8.Name = "checkedListBox8";
-            this.checkedListBox8.Size = new System.Drawing.Size(246, 88);
-            this.checkedListBox8.TabIndex = 0;
-            this.checkedListBox8.Tag = "4;3;chooseChange";
-            this.checkedListBox8.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
             // 
             // button6
             // 
@@ -307,7 +306,7 @@ namespace Attempt2
             this.checkBox4.AutoSize = true;
             this.checkBox4.Location = new System.Drawing.Point(21, 58);
             this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(106, 29);
+            this.checkBox4.Size = new System.Drawing.Size(100, 29);
             this.checkBox4.TabIndex = 4;
             this.checkBox4.Tag = "4";
             this.checkBox4.Text = "On/Off";
@@ -350,9 +349,9 @@ namespace Attempt2
             this.groupBox4.Controls.Add(this.checkBox3);
             this.groupBox4.Controls.Add(this.textBox5);
             this.groupBox4.Controls.Add(this.textBox6);
-            this.groupBox4.Location = new System.Drawing.Point(75, 592);
+            this.groupBox4.Location = new System.Drawing.Point(74, 640);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(768, 483);
+            this.groupBox4.Size = new System.Drawing.Size(768, 524);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Channel3";
@@ -385,7 +384,7 @@ namespace Attempt2
             this.checkBox3.AutoSize = true;
             this.checkBox3.Location = new System.Drawing.Point(25, 58);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(106, 29);
+            this.checkBox3.Size = new System.Drawing.Size(100, 29);
             this.checkBox3.TabIndex = 3;
             this.checkBox3.Tag = "3";
             this.checkBox3.Text = "On/Off";
@@ -469,7 +468,7 @@ namespace Attempt2
             this.checkBox2.AutoSize = true;
             this.checkBox2.Location = new System.Drawing.Point(22, 51);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(106, 29);
+            this.checkBox2.Size = new System.Drawing.Size(100, 29);
             this.checkBox2.TabIndex = 2;
             this.checkBox2.Tag = "2";
             this.checkBox2.Text = "On/Off";
@@ -487,13 +486,14 @@ namespace Attempt2
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(74, 72);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(768, 483);
+            this.groupBox1.Size = new System.Drawing.Size(768, 540);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Channel1";
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.textBox25);
             this.groupBox5.Controls.Add(this.label5);
             this.groupBox5.Controls.Add(this.textBox12);
             this.groupBox5.Controls.Add(this.button10);
@@ -505,15 +505,26 @@ namespace Attempt2
             this.groupBox5.Controls.Add(this.label1);
             this.groupBox5.Controls.Add(this.textBox9);
             this.groupBox5.Controls.Add(this.checkedListBox2);
-            this.groupBox5.Controls.Add(this.checkedListBox1);
             this.groupBox5.Location = new System.Drawing.Point(0, 252);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(768, 231);
+            this.groupBox5.Size = new System.Drawing.Size(768, 288);
             this.groupBox5.TabIndex = 13;
             this.groupBox5.TabStop = false;
             this.groupBox5.Tag = "1;Box";
-            this.groupBox5.Text = "Incrementation";
+            this.groupBox5.Text = "SweepingVoltage";
             this.groupBox5.Enter += new System.EventHandler(this.groupBox5_Enter);
+            // 
+            // textBox25
+            // 
+            this.textBox25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox25.Location = new System.Drawing.Point(26, 41);
+            this.textBox25.Multiline = true;
+            this.textBox25.Name = "textBox25";
+            this.textBox25.Size = new System.Drawing.Size(231, 120);
+            this.textBox25.TabIndex = 12;
+            this.textBox25.Tag = "1;Text";
+            this.textBox25.Text = "Set start and end voltage (v) values, the increment of change and amps value";
+            this.textBox25.TextChanged += new System.EventHandler(this.textBox25_TextChanged);
             // 
             // label5
             // 
@@ -536,7 +547,7 @@ namespace Attempt2
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(515, 135);
+            this.button10.Location = new System.Drawing.Point(516, 167);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(158, 64);
             this.button10.TabIndex = 9;
@@ -547,7 +558,7 @@ namespace Attempt2
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(346, 135);
+            this.button9.Location = new System.Drawing.Point(347, 167);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(158, 64);
             this.button9.TabIndex = 8;
@@ -620,25 +631,12 @@ namespace Attempt2
             this.checkedListBox2.Items.AddRange(new object[] {
             "Increase",
             "Decrease"});
-            this.checkedListBox2.Location = new System.Drawing.Point(26, 135);
+            this.checkedListBox2.Location = new System.Drawing.Point(27, 167);
             this.checkedListBox2.Name = "checkedListBox2";
             this.checkedListBox2.Size = new System.Drawing.Size(246, 88);
             this.checkedListBox2.TabIndex = 1;
             this.checkedListBox2.Tag = "1;3;chooseDirection";
             this.checkedListBox2.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
-            // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Items.AddRange(new object[] {
-            "Change Voltage",
-            "Change Amplitude"});
-            this.checkedListBox1.Location = new System.Drawing.Point(26, 42);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(246, 88);
-            this.checkedListBox1.TabIndex = 0;
-            this.checkedListBox1.Tag = "1;3;chooseChange";
-            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
             // 
             // button8
             // 
@@ -667,7 +665,7 @@ namespace Attempt2
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(26, 51);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(106, 29);
+            this.checkBox1.Size = new System.Drawing.Size(100, 29);
             this.checkBox1.TabIndex = 1;
             this.checkBox1.Tag = "1";
             this.checkBox1.Text = "On/Off";
@@ -703,6 +701,7 @@ namespace Attempt2
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.textBox26);
             this.groupBox6.Controls.Add(this.label6);
             this.groupBox6.Controls.Add(this.textBox13);
             this.groupBox6.Controls.Add(this.button11);
@@ -714,14 +713,24 @@ namespace Attempt2
             this.groupBox6.Controls.Add(this.label9);
             this.groupBox6.Controls.Add(this.textBox16);
             this.groupBox6.Controls.Add(this.checkedListBox3);
-            this.groupBox6.Controls.Add(this.checkedListBox4);
             this.groupBox6.Location = new System.Drawing.Point(882, 324);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(768, 231);
+            this.groupBox6.Size = new System.Drawing.Size(768, 288);
             this.groupBox6.TabIndex = 14;
             this.groupBox6.TabStop = false;
             this.groupBox6.Tag = "2;Box";
-            this.groupBox6.Text = "Incrementation";
+            this.groupBox6.Text = "SweepingVoltage";
+            // 
+            // textBox26
+            // 
+            this.textBox26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox26.Location = new System.Drawing.Point(22, 41);
+            this.textBox26.Multiline = true;
+            this.textBox26.Name = "textBox26";
+            this.textBox26.Size = new System.Drawing.Size(231, 120);
+            this.textBox26.TabIndex = 13;
+            this.textBox26.Tag = "2;Text";
+            this.textBox26.Text = "Set start and end voltage (v) values, the increment of change and amps value";
             // 
             // label6
             // 
@@ -744,7 +753,7 @@ namespace Attempt2
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(515, 135);
+            this.button11.Location = new System.Drawing.Point(521, 167);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(158, 64);
             this.button11.TabIndex = 9;
@@ -755,7 +764,7 @@ namespace Attempt2
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(346, 135);
+            this.button12.Location = new System.Drawing.Point(352, 167);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(158, 64);
             this.button12.TabIndex = 8;
@@ -827,28 +836,16 @@ namespace Attempt2
             this.checkedListBox3.Items.AddRange(new object[] {
             "Increase",
             "Decrease"});
-            this.checkedListBox3.Location = new System.Drawing.Point(26, 135);
+            this.checkedListBox3.Location = new System.Drawing.Point(32, 167);
             this.checkedListBox3.Name = "checkedListBox3";
             this.checkedListBox3.Size = new System.Drawing.Size(246, 88);
             this.checkedListBox3.TabIndex = 1;
             this.checkedListBox3.Tag = "2;3;chooseDirection";
             this.checkedListBox3.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
             // 
-            // checkedListBox4
-            // 
-            this.checkedListBox4.FormattingEnabled = true;
-            this.checkedListBox4.Items.AddRange(new object[] {
-            "Change Voltage",
-            "Change Amplitude"});
-            this.checkedListBox4.Location = new System.Drawing.Point(26, 42);
-            this.checkedListBox4.Name = "checkedListBox4";
-            this.checkedListBox4.Size = new System.Drawing.Size(246, 88);
-            this.checkedListBox4.TabIndex = 0;
-            this.checkedListBox4.Tag = "2;3;chooseChange";
-            this.checkedListBox4.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
-            // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.textBox27);
             this.groupBox7.Controls.Add(this.label10);
             this.groupBox7.Controls.Add(this.textBox17);
             this.groupBox7.Controls.Add(this.button13);
@@ -860,14 +857,24 @@ namespace Attempt2
             this.groupBox7.Controls.Add(this.label13);
             this.groupBox7.Controls.Add(this.textBox20);
             this.groupBox7.Controls.Add(this.checkedListBox5);
-            this.groupBox7.Controls.Add(this.checkedListBox6);
-            this.groupBox7.Location = new System.Drawing.Point(75, 844);
+            this.groupBox7.Location = new System.Drawing.Point(74, 884);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(768, 231);
+            this.groupBox7.Size = new System.Drawing.Size(768, 280);
             this.groupBox7.TabIndex = 14;
             this.groupBox7.TabStop = false;
             this.groupBox7.Tag = "3;Box";
-            this.groupBox7.Text = "Incrementation";
+            this.groupBox7.Text = "SweepingVoltage";
+            // 
+            // textBox27
+            // 
+            this.textBox27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox27.Location = new System.Drawing.Point(25, 42);
+            this.textBox27.Multiline = true;
+            this.textBox27.Name = "textBox27";
+            this.textBox27.Size = new System.Drawing.Size(231, 108);
+            this.textBox27.TabIndex = 13;
+            this.textBox27.Tag = "3;Text";
+            this.textBox27.Text = "Set start and end voltage (v) values, the increment of change and amps value";
             // 
             // label10
             // 
@@ -890,7 +897,7 @@ namespace Attempt2
             // 
             // button13
             // 
-            this.button13.Location = new System.Drawing.Point(515, 135);
+            this.button13.Location = new System.Drawing.Point(515, 156);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(158, 64);
             this.button13.TabIndex = 9;
@@ -901,7 +908,7 @@ namespace Attempt2
             // 
             // button14
             // 
-            this.button14.Location = new System.Drawing.Point(346, 135);
+            this.button14.Location = new System.Drawing.Point(346, 156);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(158, 64);
             this.button14.TabIndex = 8;
@@ -973,25 +980,12 @@ namespace Attempt2
             this.checkedListBox5.Items.AddRange(new object[] {
             "Increase",
             "Decrease"});
-            this.checkedListBox5.Location = new System.Drawing.Point(26, 135);
+            this.checkedListBox5.Location = new System.Drawing.Point(26, 156);
             this.checkedListBox5.Name = "checkedListBox5";
             this.checkedListBox5.Size = new System.Drawing.Size(246, 88);
             this.checkedListBox5.TabIndex = 1;
             this.checkedListBox5.Tag = "3;3;chooseDirection";
             this.checkedListBox5.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
-            // 
-            // checkedListBox6
-            // 
-            this.checkedListBox6.FormattingEnabled = true;
-            this.checkedListBox6.Items.AddRange(new object[] {
-            "Change Voltage",
-            "Change Amplitude"});
-            this.checkedListBox6.Location = new System.Drawing.Point(26, 42);
-            this.checkedListBox6.Name = "checkedListBox6";
-            this.checkedListBox6.Size = new System.Drawing.Size(246, 88);
-            this.checkedListBox6.TabIndex = 0;
-            this.checkedListBox6.Tag = "3;3;chooseChange";
-            this.checkedListBox6.SelectedIndexChanged += new System.EventHandler(this.checkedListBox);
             // 
             // menuStrip1
             // 
@@ -1000,10 +994,11 @@ namespace Attempt2
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mainControlsToolStripMenuItem,
             this.toolStripSeparator1,
-            this.createTestListToolStripMenuItem});
+            this.createTestListToolStripMenuItem,
+            this.drawGraphFromDataToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1690, 40);
+            this.menuStrip1.Size = new System.Drawing.Size(1690, 33);
             this.menuStrip1.TabIndex = 15;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -1011,27 +1006,34 @@ namespace Attempt2
             // mainControlsToolStripMenuItem
             // 
             this.mainControlsToolStripMenuItem.Name = "mainControlsToolStripMenuItem";
-            this.mainControlsToolStripMenuItem.Size = new System.Drawing.Size(180, 36);
+            this.mainControlsToolStripMenuItem.Size = new System.Drawing.Size(136, 29);
             this.mainControlsToolStripMenuItem.Text = "Main controls";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 36);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 29);
             // 
             // createTestListToolStripMenuItem
             // 
             this.createTestListToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator3});
             this.createTestListToolStripMenuItem.Name = "createTestListToolStripMenuItem";
-            this.createTestListToolStripMenuItem.Size = new System.Drawing.Size(186, 36);
+            this.createTestListToolStripMenuItem.Size = new System.Drawing.Size(139, 29);
             this.createTestListToolStripMenuItem.Text = "Create test list";
             this.createTestListToolStripMenuItem.Click += new System.EventHandler(this.createTestListToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(116, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(87, 6);
+            // 
+            // drawGraphFromDataToolStripMenuItem
+            // 
+            this.drawGraphFromDataToolStripMenuItem.Name = "drawGraphFromDataToolStripMenuItem";
+            this.drawGraphFromDataToolStripMenuItem.Size = new System.Drawing.Size(205, 29);
+            this.drawGraphFromDataToolStripMenuItem.Text = "Draw graph from data";
+            this.drawGraphFromDataToolStripMenuItem.Click += new System.EventHandler(this.drawGraphFromDataToolStripMenuItem_Click);
             // 
             // backgroundWorker1
             // 
@@ -1041,7 +1043,7 @@ namespace Attempt2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1690, 1104);
+            this.ClientSize = new System.Drawing.Size(1690, 1192);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox3);
@@ -1104,7 +1106,6 @@ namespace Attempt2
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.CheckedListBox checkedListBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox9;
@@ -1128,7 +1129,6 @@ namespace Attempt2
         private Label label17;
         private TextBox textBox24;
         private CheckedListBox checkedListBox7;
-        private CheckedListBox checkedListBox8;
         private GroupBox groupBox6;
         private Label label6;
         private TextBox textBox13;
@@ -1141,7 +1141,6 @@ namespace Attempt2
         private Label label9;
         private TextBox textBox16;
         private CheckedListBox checkedListBox3;
-        private CheckedListBox checkedListBox4;
         private GroupBox groupBox7;
         private Label label10;
         private TextBox textBox17;
@@ -1154,13 +1153,17 @@ namespace Attempt2
         private Label label13;
         private TextBox textBox20;
         private CheckedListBox checkedListBox5;
-        private CheckedListBox checkedListBox6;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem mainControlsToolStripMenuItem;
         private ToolStripMenuItem createTestListToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripSeparator toolStripSeparator3;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private ToolStripMenuItem drawGraphFromDataToolStripMenuItem;
+        private TextBox textBox25;
+        private TextBox textBox28;
+        private TextBox textBox26;
+        private TextBox textBox27;
     }
 }
 

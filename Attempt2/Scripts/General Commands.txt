@@ -1,0 +1,6 @@
+READ?;Return reading from the main display
+MODE?;Return state of main display
+FILTON;Enables the 50/60Hz hardware filter. This filter only affects the Vdc and Ohms measurement modes.
+FILTOFF;Disablesthe 50/60Hz hardware filter
+SPEED <SPEED>;Sets standard sampling speed to either 4SPS or 20SPS.
+RTD <WIR>;Sts RTD temperature measurement connection to either 2 or 4 wire

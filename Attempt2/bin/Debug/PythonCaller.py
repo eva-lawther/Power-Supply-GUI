@@ -11,6 +11,7 @@ import sed_json as fm #file manager ### C# Interaction
 import sweeping
 import configuration
 import runCommandList
+import drawGraph
 
 
 
@@ -29,6 +30,9 @@ elif(fileCall.Id == "configuration.py"):
     
 elif(fileCall.Id == "runCommandList.py"):
     runCommandList.main()
+    
+elif(fileCall.Id == "drawGraph.py"):
+    drawGraph.main()
     
 #elif(fileCall.Id == )
     

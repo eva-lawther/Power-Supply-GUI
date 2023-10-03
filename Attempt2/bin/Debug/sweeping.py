@@ -11,20 +11,24 @@ import time
 
 def devices():
     rm = pyvisa.ResourceManager()
-    print("Resources detected\n{}\n".format(rm.list_resources()))
+    #print("Resources detected\n{}\n".format(rm.list_resources()))
     supply = rm.open_resource('ASRL13::INSTR') # resource id for power supply   
     dmm = rm.open_resource('ASRL6::INSTR')    # resource id for digital multi meter
     # set digital multimeter to dc voltage 
     return (supply, dmm, rm)
 
-def doVoltageReadings(dmm, start, set, rows):
+def doVoltageReadings(dmm, start, set, rows, startTime):
     set.setVoltage(start)
-    sleep(2)                                     # Wait for reading to settle
+    sleep(2)       
+    endTime = time.perf_counter()    
+    #Wait for reading to settle
     vMeasured = float(dmm.query('READ?')[1:8])   # measure the voltage
     vExponent = str(dmm.query('READ?')[8:11])    # retrieve exponent
     sleep(2)
     # Write results to console
-    rows.append([start, vMeasured, vExponent])
+    #elapsedTime = endTime - startTime
+    rows.append([endTime, start, vMeasured])
+    #rows.append([start, vMeasured, vExponent])
     return rows, start, set
 
     
@@ -33,14 +37,15 @@ def variableVoltage(set, constant, start, end, direction, increment, dmm):
     set.setAmps(constant)
     set.setVoltage(start)
     set.turnOn()
+    startTime = time.perf_counter()
     rows = []
     if direction == 1: #up
         while start <= end:
-           rows, start, set = doVoltageReadings(dmm, start,set,rows)
+           rows, start, set = doVoltageReadings(dmm, start,set,rows, startTime)
            start += increment 
     else:
         while start >= end:
-            rows, start, set = doVoltageReadings(dmm,start,set, rows)
+            rows, start, set = doVoltageReadings(dmm,start,set, rows, startTime)
             start -= increment 
     return set, rows
 
@@ -88,7 +93,8 @@ def csvFile(rows):
     workingDir = os.getcwd()
     timeStr = time.strftime("%H%M%S")
     fileName = "testData_" + timeStr + ".csv"
-    header = ['VariableIn', 'VariableRead', 'Exponent']
+    #header = ['VariableIn', 'VariableRead', 'Exponent']
+    header = ["Time", "Voltage set", "Voltage read"]
     with open(workingDir + "/" + fileName, "w", newline='') as file:
         writer = csv.writer(file)
         writer.writerow(header)
@@ -100,7 +106,7 @@ def main():
     try:
         supply, dmm, rm = devices()  
     except:
-        print("turn machines on dummy")
+        print("turn machines on")
     
     channel, variable, direction, start, end, increment, constant = getValues()
 
@@ -108,13 +114,14 @@ def main():
     set.turnOff() # turn off
     
 
-   
+    set, rows = variableVoltage(set, constant, start, end, direction, increment, dmm)
 
+    '''
     if variable == 0: #variable voltage = 0
         set, rows = variableVoltage(set, constant, start, end, direction, increment, dmm)
     else: #variable amps = 1
         set, rows = variableAmps(set, constant, start, end, direction, increment, dmm)   
-    
+    '''
     fileLocation = csvFile(rows)
     
     set.end() 

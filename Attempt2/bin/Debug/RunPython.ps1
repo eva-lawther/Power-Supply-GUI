@@ -7,6 +7,7 @@ Switch ($selectscript)
 	'Command builder.py' {python Command builder.py}
 	'commandClass.py' {python commandClass.py}
 	'configuration.py' {python configuration.py}
+	'drawGraph.py' {python drawGraph.py}
 	'mightGraph.py' {python mightGraph.py}
 	'module1.py' {python module1.py}
 	'powerSupplyCommands.py' {python powerSupplyCommands.py}

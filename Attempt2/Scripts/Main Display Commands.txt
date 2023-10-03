@@ -1,0 +1,16 @@
+VDC <RANGE>;Sets the main display to dc Volts and optionally sets the range 
+VAC <ARANGE>; Sets the main display to ac Volts and optionally sets the range
+VACDC <ARANGE>; Sets the main display to ac+dc Volts and optionally sets the range
+IDC <AMPRANGE>; Sets the main display to dc Amps and optionally sets the range
+IAC <AMPRANGE>; Sets the main display to ac Amps and optionally sets the range
+IACDC <AMPRANGE>; Sets the main display to ac+dc Amps and optionally sets the range
+2WOHMS <BPD>; Sets the main display to two wire Ohms and optionally sets the range
+4WOHMS <BPD>; Sets the main display to four wire Ohms and optionally sets the range
+CONT; Sets the main display to continuity test.
+DIODE; Sets the main display to diode test.
+TEMPC <TPC>; Sets the main display to Celsius temperature measurement and optionally sets the RTD probe type
+TEMPF <TPC>; Sets the main display to Fahrenheit temperature measurement and optionally sets the RTD probe type
+CAP <CAP>; Sets the main display to Capacitance and optionally sets the range
+FREQ <FREQ>; Sets the main display to Frequency and optionally sets the range
+AUTO; Sets the main display to autorange, except for Continuity or Diode check. 
+MAN; Sets the main display to manual, i.e. the current range is "locked"
