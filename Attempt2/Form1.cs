@@ -115,7 +115,7 @@ namespace Attempt2
             }
             catch
             {
-                MessageBox.Show("Import JSON Problem. " + dummy_g);
+                MessageBox.Show(dummy_g);
             }
             
             

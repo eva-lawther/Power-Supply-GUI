@@ -23,11 +23,17 @@ def doVoltageReadings(dmm, start, set, rows, startTime):
     endTime = time.perf_counter()    
     #Wait for reading to settle
     vMeasured = float(dmm.query('READ?')[1:8])   # measure the voltage
-    vExponent = str(dmm.query('READ?')[8:11])    # retrieve exponent
+    vExponent = str(dmm.query('READ?')[9:11])    # retrieve exponent (e)00
     sleep(2)
     # Write results to console
-    #elapsedTime = endTime - startTime
-    rows.append([endTime, start, vMeasured])
+    elapsedTime = endTime - startTime
+    if(vExponent != "00"):
+        vExpo = float(vExponent[1])
+        if (vExponent[0] == "-" ):
+            vMeasured = vMeasured / 10**(vExpo)
+        elif (vExponent[0] == "+"):
+            vMeasured = vMeasured * 10**(vExpo)
+    rows.append([elapsedTime, start, vMeasured])
     #rows.append([start, vMeasured, vExponent])
     return rows, start, set
 
@@ -94,7 +100,7 @@ def csvFile(rows):
     timeStr = time.strftime("%H%M%S")
     fileName = "testData_" + timeStr + ".csv"
     #header = ['VariableIn', 'VariableRead', 'Exponent']
-    header = ["Time", "Voltage set", "Voltage read"]
+    header = ["Time", "Voltage set", "Voltage measured"]
     with open(workingDir + "/" + fileName, "w", newline='') as file:
         writer = csv.writer(file)
         writer.writerow(header)
