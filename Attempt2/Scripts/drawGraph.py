@@ -19,10 +19,10 @@ def main():
 
 
     plt.ylabel("voltage (v)")
-    plt.xlabel("time (fractional seconds)")
+    plt.xlabel("time (seconds)")
 
-    plt.plot(df[x], df[y1], label = y1)
-    plt.plot(df[x], df[y2], label = y2)
+    plt.plot(df[x], df[y1], label = y1, marker = 'o')
+    plt.plot(df[x], df[y2], label = y2, marker = 'o')
 
     plt.legend()
     plt.show()

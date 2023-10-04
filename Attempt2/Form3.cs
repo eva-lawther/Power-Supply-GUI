@@ -238,8 +238,26 @@ namespace Attempt2
 
         }
 
-    
+        private void mainControlsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Form1 diy = new Form1();
+                diy.Show();
+                this.Hide();
+            }
+            catch { Console.WriteLine("ERROR in mainControlsToolStripMenuItem_Click "); }
+        }
 
-
+        private void createTestListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Form2 diy = new Form2();
+                diy.Show();
+                this.Hide();
+            }
+            catch { Console.WriteLine("ERROR in createTestListToolStripMenuItem_Click "); }
+        }
     }
 }

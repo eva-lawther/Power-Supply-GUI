@@ -35,7 +35,12 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.mainControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.drawGraphFromDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -50,7 +55,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(35, 41);
+            this.button1.Location = new System.Drawing.Point(35, 73);
             this.button1.Margin = new System.Windows.Forms.Padding(6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(302, 62);
@@ -63,7 +68,7 @@
             // 
             this.groupBox1.Controls.Add(this.checkedListBox1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(457, 12);
+            this.groupBox1.Location = new System.Drawing.Point(457, 62);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(377, 524);
             this.groupBox1.TabIndex = 2;
@@ -74,7 +79,7 @@
             // checkedListBox1
             // 
             this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(13, 28);
+            this.checkedListBox1.Location = new System.Drawing.Point(6, 38);
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(356, 484);
             this.checkedListBox1.TabIndex = 0;
@@ -112,23 +117,59 @@
             this.label1.Text = "All \"checked\" commands will be removed";
             this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
+            // backgroundWorker2
+            // 
+            this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mainControlsToolStripMenuItem,
+            this.drawGraphFromDataToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(930, 42);
+            this.menuStrip1.TabIndex = 6;
+            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
+            // 
+            // mainControlsToolStripMenuItem
+            // 
+            this.mainControlsToolStripMenuItem.Name = "mainControlsToolStripMenuItem";
+            this.mainControlsToolStripMenuItem.Size = new System.Drawing.Size(184, 38);
+            this.mainControlsToolStripMenuItem.Text = "Main Controls";
+            this.mainControlsToolStripMenuItem.Click += new System.EventHandler(this.mainControlsToolStripMenuItem_Click);
+            // 
+            // drawGraphFromDataToolStripMenuItem
+            // 
+            this.drawGraphFromDataToolStripMenuItem.Name = "drawGraphFromDataToolStripMenuItem";
+            this.drawGraphFromDataToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
+            this.drawGraphFromDataToolStripMenuItem.Text = "Draw graph from data";
+            this.drawGraphFromDataToolStripMenuItem.Click += new System.EventHandler(this.drawGraphFromDataToolStripMenuItem_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(17F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(930, 556);
+            this.ClientSize = new System.Drawing.Size(930, 593);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Form2";
             this.Text = "PowerSupplyGUI";
             this.Load += new System.EventHandler(this.Form2_Load);
             this.groupBox1.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -143,5 +184,9 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Label label1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker2;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem mainControlsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem drawGraphFromDataToolStripMenuItem;
     }
 }

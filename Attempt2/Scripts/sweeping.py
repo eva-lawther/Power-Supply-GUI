@@ -55,32 +55,6 @@ def variableVoltage(set, constant, start, end, direction, increment, dmm):
             start -= increment 
     return set, rows
 
-def doAmpsReadings(dmm, start, set, rows):
-    set.setAmps(start)
-    sleep(1)                                     # Wait for reading to settle
-    aMeasured = float(dmm.query('READ?')[1:8])   # measure the voltage
-    aExponent = str(dmm.query('READ?')[8:11])    # retrieve exponent
-    sleep(1)
-    # Write results to console
-    rows.append([start, aMeasured, aExponent])
-    return rows, start, set
-
-
-def variableAmps(set, constant, start, end, direction, increment,  dmm): # variable == 'Amplitude'
-    set.setVoltage(constant)
-    set.setAmps(start)
-    set.turnOn()
-    rows = []
-    if direction == 1:
-        while start <= end:
-            rows, start, set = doAmpsReadings(dmm, start, set, rows)        
-            start += increment 
-    else:
-        while start <= end:
-            rows, start, set = doAmpsReadings(dmm, start, set, rows)        
-            start += increment
-    return set, rows
-
 def getValues():
     program_out_script_in_json_buffer = fm.import_json(".data.json")
 
@@ -122,12 +96,7 @@ def main():
 
     set, rows = variableVoltage(set, constant, start, end, direction, increment, dmm)
 
-    '''
-    if variable == 0: #variable voltage = 0
-        set, rows = variableVoltage(set, constant, start, end, direction, increment, dmm)
-    else: #variable amps = 1
-        set, rows = variableAmps(set, constant, start, end, direction, increment, dmm)   
-    '''
+   
     fileLocation = csvFile(rows)
     
     set.end() 

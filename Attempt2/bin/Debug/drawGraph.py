@@ -2,15 +2,32 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-#import pandas as pd
+import pandas as pd
 
 def main():
     fileName = getName()
-    toPlot = np.loadtxt(fileName)
-    plt.title(fileName)
-    plt.plot(toPlot)
+    print(fileName)
+    plt.rcParams["figure.figsize"] = [7.00, 3.50]
+    plt.rcParams["figure.autolayout"] = True
+
+    x = "Time"
+    y1 = "Voltage set"
+    y2 = "Voltage measured"
+
+    columns = [x,y1,y2]
+    df = pd.read_csv(fileName, usecols=columns)
+
+
     plt.ylabel("voltage (v)")
-    plt.xlabel("time (fractional seconds)")
+    plt.xlabel("time (seconds)")
+
+    plt.plot(df[x], df[y1], label = y1, marker = 'o')
+    plt.plot(df[x], df[y2], label = y2, marker = 'o')
+
+    plt.legend()
+    plt.show()
+
+
 
 def getName():
     file = open("fileNameToGraph.txt","r")

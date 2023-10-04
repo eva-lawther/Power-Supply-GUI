@@ -32,12 +32,14 @@ namespace Attempt2
     {
         
         private string[] COMMAND_GLOBAL = new string[8];
+        private string instrumentInitials = "";
         //private GroupBox groupBox;
         //private Control checkedListParent = Form2;
 
         public Form2()
         {
             InitializeComponent();
+            initialise_BackWorkers();
         }
 
         private void runCommandList()
@@ -48,14 +50,60 @@ namespace Attempt2
             };
 
             ExportJSON(".data.json", commandList, true);
-            string[] arguments = { "PythonCaller.py" };
-            string output = RunPowerShellScript("RunPython.ps1", arguments);
+            backgroundWorker2.RunWorkerAsync();
+            //string[] arguments = { "PythonCaller.py" };
+            //string output = RunPowerShellScript("RunPython.ps1", arguments);
         }
-        
 
-        
+        private void initialise_BackWorkers()
+        {
+            /*
+            backgroundWorker1.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
+            backgroundWorker1.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker1_RunWorkerCompleted);
+            */
+            backgroundWorker2.DoWork += backgroundWorker2_DoWork;
+            backgroundWorker2.RunWorkerCompleted += backgroundWorker2_RunWorkerCompleted;
+        }
 
-        
+        string dummy_g = "none";
+        bool first_flag_g = true;
+        private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+            if (first_flag_g)
+            {
+                string[] arguments = { "PythonCaller.py" };
+                dummy_g = RunPowerShellScript("RunPython.ps1", arguments);
+                first_flag_g = false;
+            }
+
+            //MessageBox.Show("Hey, I'm done woohoo: " + output);
+
+            //dummy_g = "not none anymore";
+            return;
+        }
+
+        private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            //MessageBox.Show(dummy_g);
+            first_flag_g = true;
+            ImportJSON(".dataReady.json");
+            try
+            {
+                JsonDataFormat obj = programInScriptOut_jsonBuffer[0];
+                string fileLocation = obj.Id;
+                MessageBox.Show(fileLocation);
+            }
+            catch
+            {
+                MessageBox.Show(dummy_g);
+            }
+
+
+
+        }
+
+
         public string RunPowerShellScript(string psScript, string[] arguments)
         {
             // Concatenate arguments into a single string.
@@ -271,11 +319,14 @@ namespace Attempt2
                 string commandFolder = "";
                 if (instrument == "PowerSupplyCommands")
                 {
+                    instrumentInitials = "PS";
                     commandFolder = @currentDir + "/PowerSupplyCommands.txt";
+                    
                 }
                 else
                 {
                     commandFolder = @currentDir + "/MultiMeterCommands.txt";
+                    instrumentInitials = "MM";
                 }
                 
 
@@ -434,7 +485,7 @@ namespace Attempt2
                 Form form = (Form)parent;
                 string final = string.Join("", COMMAND_GLOBAL);
                 CheckedListBox checkedListBox = Controls.Find("checkedListBox1", true).FirstOrDefault() as CheckedListBox;
-                checkedListBox.Items.Add(final, CheckState.Checked);
+                checkedListBox.Items.Add(instrumentInitials + ": " + final, CheckState.Checked);
                 form.Hide();
             }
             catch { Console.WriteLine("ERROR in addCommand"); }
@@ -777,5 +828,33 @@ namespace Attempt2
 
         }
 
+      
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void mainControlsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Form1 diy = new Form1();
+                diy.Show();
+                this.Hide();
+            }
+            catch { Console.WriteLine("ERROR in mainControlsToolStripMenuItem_Click "); }
+        }
+
+        private void drawGraphFromDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Form3 diy = new Form3();
+                diy.Show();
+                this.Hide();
+            }
+            catch { Console.WriteLine("ERROR in drawGraphFromDataToolStripMenuItem_Click "); }
+        }
     }
 }

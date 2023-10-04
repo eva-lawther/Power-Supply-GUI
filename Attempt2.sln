@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Attempt2", "Attempt2\Attempt2.csproj", "{879F825B-1957-4C40-8EAA-18BA7E9AB922}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerSupplyGUI", "Attempt2\PowerSupplyGUI.csproj", "{879F825B-1957-4C40-8EAA-18BA7E9AB922}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

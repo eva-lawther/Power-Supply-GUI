@@ -12,7 +12,7 @@ using System.Management;
 using System.Management.Automation;
 using System.Collections.ObjectModel;
 using System.Management.Automation.Runspaces;
-using Attempt2.Properties; // HEREEEEEEEEE YAYYY
+using Attempt2.Properties; 
 using System.Threading;
 using System.Text.Json;
 using System.IO.Pipes;
@@ -41,6 +41,8 @@ namespace Attempt2
 {
     public partial class Form1 : Form
     {
+        string dummy_g = "none";
+        bool first_flag_g = true;
         public Form1()
         {
             InitializeComponent();
@@ -49,6 +51,7 @@ namespace Attempt2
             PopulatePowerShellScript("RunPython.ps1", ".py", "python", null);
             initialise_BackWorkers();
         }
+        
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -69,23 +72,18 @@ namespace Attempt2
             ImportJSON(".dataReady.json");
             JsonDataFormat obj = ReturnObjFromJsonBuffer("1");
             string fileLocation = obj.Id;
-            MessageBox.Show(fileLocation);
+           // MessageBox.Show(fileLocation);
 
         }  // Call python class
         
 
         private void initialise_BackWorkers()
         {
-            /*
-            backgroundWorker1.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
-            backgroundWorker1.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker1_RunWorkerCompleted);
-            */
             backgroundWorker1.DoWork += backgroundWorker1_DoWork;
             backgroundWorker1.RunWorkerCompleted +=  backgroundWorker1_RunWorkerCompleted;
         }
 
-        string dummy_g = "none";
-        bool first_flag_g = true;
+        
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -121,20 +119,7 @@ namespace Attempt2
             
        
         }
-        /*
-        private void configuration(int command, int channel, double value)
-        {
-            List<JsonDataFormat> config = new List<JsonDataFormat>()
-            {
-                new JsonDataFormat("configuration.py", 3, new double[] {command, channel, value} ),
-            };
-
-            ExportJSON(".data.json", config, true);
-            //backgroundWorker1_RunWorkerCompleted(null, null);
-            backgroundWorker1.RunWorkerAsync();
-            
-        }  // Call python class
-        */
+     
         /*
         private string sweeping(int channel, string type, string way, double start, double end, double increment, double constant)
         {
@@ -616,24 +601,6 @@ namespace Attempt2
         }
         // run sweeping file given inputs
 
-        private string variableChoice(Control parent, string tag) 
-        {
-            try
-            {
-                string choice = "";
-                CheckedListBox checkedListBox = (CheckedListBox)findObjectFromTag(parent, tag + ";" + "chooseChange");
-                choice = checkedListBox.CheckedItems[0].ToString().Split(' ').Last();
-                return choice;
-            }
-            catch 
-            { 
-                Console.WriteLine("ERROR in variableChoice");
-                return null;
-            }
-            
-        }
-        //return whether variable is voltage or amplitude
-
         private string directionChoice(Control parent, string tag) 
         {
             try
@@ -678,6 +645,7 @@ namespace Attempt2
             {
                 Form2 diy = new Form2();
                 diy.Show();
+                this.Hide();
             }
             catch { Console.WriteLine("ERROR in createTestListToolStripMenuItem_Click "); }
             
@@ -690,6 +658,7 @@ namespace Attempt2
             {
                 Form3 diy = new Form3();
                 diy.Show();
+                this.Hide();
             }
             catch { Console.WriteLine("ERROR in drawGraphFromDataToolStripMenuItem_Click "); }
         }
@@ -722,10 +691,6 @@ namespace Attempt2
 
         }
 
-        private void textBox25_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
 

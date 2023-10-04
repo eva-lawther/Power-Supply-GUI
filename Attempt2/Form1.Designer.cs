@@ -109,12 +109,11 @@ namespace Attempt2
             this.textBox20 = new System.Windows.Forms.TextBox();
             this.checkedListBox5 = new System.Windows.Forms.CheckedListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.mainControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.createTestListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.drawGraphFromDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.groupBox3.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -306,7 +305,7 @@ namespace Attempt2
             this.checkBox4.AutoSize = true;
             this.checkBox4.Location = new System.Drawing.Point(21, 58);
             this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(100, 29);
+            this.checkBox4.Size = new System.Drawing.Size(106, 29);
             this.checkBox4.TabIndex = 4;
             this.checkBox4.Tag = "4";
             this.checkBox4.Text = "On/Off";
@@ -384,7 +383,7 @@ namespace Attempt2
             this.checkBox3.AutoSize = true;
             this.checkBox3.Location = new System.Drawing.Point(25, 58);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(100, 29);
+            this.checkBox3.Size = new System.Drawing.Size(106, 29);
             this.checkBox3.TabIndex = 3;
             this.checkBox3.Tag = "3";
             this.checkBox3.Text = "On/Off";
@@ -468,7 +467,7 @@ namespace Attempt2
             this.checkBox2.AutoSize = true;
             this.checkBox2.Location = new System.Drawing.Point(22, 51);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(100, 29);
+            this.checkBox2.Size = new System.Drawing.Size(106, 29);
             this.checkBox2.TabIndex = 2;
             this.checkBox2.Tag = "2";
             this.checkBox2.Text = "On/Off";
@@ -524,7 +523,6 @@ namespace Attempt2
             this.textBox25.TabIndex = 12;
             this.textBox25.Tag = "1;Text";
             this.textBox25.Text = "Set start and end voltage (v) values, the increment of change and amps value";
-            this.textBox25.TextChanged += new System.EventHandler(this.textBox25_TextChanged);
             // 
             // label5
             // 
@@ -665,7 +663,7 @@ namespace Attempt2
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(26, 51);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(100, 29);
+            this.checkBox1.Size = new System.Drawing.Size(106, 29);
             this.checkBox1.TabIndex = 1;
             this.checkBox1.Tag = "1";
             this.checkBox1.Text = "On/Off";
@@ -992,52 +990,45 @@ namespace Attempt2
             this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mainControlsToolStripMenuItem,
-            this.toolStripSeparator1,
             this.createTestListToolStripMenuItem,
+            this.toolStripSeparator2,
             this.drawGraphFromDataToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1690, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1690, 42);
             this.menuStrip1.TabIndex = 15;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
-            // 
-            // mainControlsToolStripMenuItem
-            // 
-            this.mainControlsToolStripMenuItem.Name = "mainControlsToolStripMenuItem";
-            this.mainControlsToolStripMenuItem.Size = new System.Drawing.Size(136, 29);
-            this.mainControlsToolStripMenuItem.Text = "Main controls";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 29);
             // 
             // createTestListToolStripMenuItem
             // 
             this.createTestListToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator3});
             this.createTestListToolStripMenuItem.Name = "createTestListToolStripMenuItem";
-            this.createTestListToolStripMenuItem.Size = new System.Drawing.Size(139, 29);
+            this.createTestListToolStripMenuItem.Size = new System.Drawing.Size(186, 36);
             this.createTestListToolStripMenuItem.Text = "Create test list";
             this.createTestListToolStripMenuItem.Click += new System.EventHandler(this.createTestListToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(87, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(356, 6);
             // 
             // drawGraphFromDataToolStripMenuItem
             // 
             this.drawGraphFromDataToolStripMenuItem.Name = "drawGraphFromDataToolStripMenuItem";
-            this.drawGraphFromDataToolStripMenuItem.Size = new System.Drawing.Size(205, 29);
+            this.drawGraphFromDataToolStripMenuItem.Size = new System.Drawing.Size(268, 36);
             this.drawGraphFromDataToolStripMenuItem.Text = "Draw graph from data";
             this.drawGraphFromDataToolStripMenuItem.Click += new System.EventHandler(this.drawGraphFromDataToolStripMenuItem_Click);
             // 
             // backgroundWorker1
             // 
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 36);
             // 
             // Form1
             // 
@@ -1154,9 +1145,7 @@ namespace Attempt2
         private TextBox textBox20;
         private CheckedListBox checkedListBox5;
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem mainControlsToolStripMenuItem;
         private ToolStripMenuItem createTestListToolStripMenuItem;
-        private ToolStripSeparator toolStripSeparator1;
         private ToolStripSeparator toolStripSeparator3;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private ToolStripMenuItem drawGraphFromDataToolStripMenuItem;
@@ -1164,6 +1153,7 @@ namespace Attempt2
         private TextBox textBox28;
         private TextBox textBox26;
         private TextBox textBox27;
+        private ToolStripSeparator toolStripSeparator2;
     }
 }
 
