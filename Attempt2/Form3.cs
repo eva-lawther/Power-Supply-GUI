@@ -1,17 +1,15 @@
-﻿using System;
+﻿#region imports
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management.Automation.Runspaces;
 using System.Management.Automation;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows.Forms; 
+#endregion
 
 namespace Attempt2
 {
@@ -22,6 +20,7 @@ namespace Attempt2
             InitializeComponent();
         }
 
+        #region Specific json format
         private void drawGraph()
         {
             List<JsonDataFormat> commandList = new List<JsonDataFormat>()
@@ -32,12 +31,10 @@ namespace Attempt2
             ExportJSON(".data.json", commandList, true);
             string[] arguments = { "PythonCaller.py" };
             string output = RunPowerShellScript("RunPython.ps1", arguments);
-        }
+        } 
+        #endregion
 
-
-
-
-
+        #region Python Interface
         public string RunPowerShellScript(string psScript, string[] arguments)
         {
             // Concatenate arguments into a single string.
@@ -214,9 +211,8 @@ namespace Attempt2
             public double[] Values { get; set; }
         }
 
-        public List<JsonDataFormat> programInScriptOut_jsonBuffer; // Python Interface
-
-
+        public List<JsonDataFormat> programInScriptOut_jsonBuffer; // Python Interface 
+        #endregion
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -237,6 +233,7 @@ namespace Attempt2
 
 
         }
+        // call python file
 
         private void mainControlsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -248,6 +245,7 @@ namespace Attempt2
             }
             catch { Console.WriteLine("ERROR in mainControlsToolStripMenuItem_Click "); }
         }
+        // call Form1 when clicked
 
         private void createTestListToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -259,5 +257,6 @@ namespace Attempt2
             }
             catch { Console.WriteLine("ERROR in createTestListToolStripMenuItem_Click "); }
         }
+        // call Form2 when clicked
     }
 }

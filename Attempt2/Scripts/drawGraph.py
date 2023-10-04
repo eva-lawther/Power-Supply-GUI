@@ -1,7 +1,6 @@
 # Take a csv file and plot it using matplotlib
 
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 
 def main():
@@ -21,8 +20,8 @@ def main():
     plt.ylabel("voltage (v)")
     plt.xlabel("time (seconds)")
 
-    plt.plot(df[x], df[y1], label = y1, marker = 'o')
-    plt.plot(df[x], df[y2], label = y2, marker = 'o')
+    plt.plot(df[x], df[y1], label = y1, marker = 'o', alpha=0.5)
+    plt.plot(df[x], df[y2], label = y2, marker = 'o', alpha=0.5)
 
     plt.legend()
     plt.show()

@@ -74,7 +74,6 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "commandList";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // checkedListBox1
             // 
@@ -84,7 +83,6 @@
             this.checkedListBox1.Size = new System.Drawing.Size(356, 484);
             this.checkedListBox1.TabIndex = 0;
             this.checkedListBox1.Tag = "MAIN";
-            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.listOfCommands);
             // 
             // button2
             // 
@@ -115,7 +113,6 @@
             this.label1.Size = new System.Drawing.Size(402, 25);
             this.label1.TabIndex = 5;
             this.label1.Text = "All \"checked\" commands will be removed";
-            this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // backgroundWorker2
             // 
@@ -133,7 +130,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(930, 42);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // mainControlsToolStripMenuItem
             // 
@@ -166,7 +162,6 @@
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Form2";
             this.Text = "PowerSupplyGUI";
-            this.Load += new System.EventHandler(this.Form2_Load);
             this.groupBox1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

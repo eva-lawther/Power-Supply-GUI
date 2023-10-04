@@ -1,6 +1,3 @@
-from msilib import Directory
-from re import S
-from tkinter import Variable
 import pyvisa
 from time import sleep
 from commandClass import channelInstrument 

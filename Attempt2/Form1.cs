@@ -1,41 +1,18 @@
-﻿using System;
+﻿
+# region Imports
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Text.Json;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Management;
 using System.Management.Automation;
 using System.Collections.ObjectModel;
 using System.Management.Automation.Runspaces;
-using Attempt2.Properties; 
-using System.Threading;
-using System.Text.Json;
-using System.IO.Pipes;
-using static System.Net.Mime.MediaTypeNames;
-using System.Net.NetworkInformation;
-
-
-
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-//using static System.Net.WebRequestMethods;
-
-
-
-using System.Diagnostics; // dont need
-using RohdeSchwarz.RsInstrument; // dont need
-using IronPython.Hosting; //dont need
-using System.Security.Authentication.ExtendedProtection;
-using RohdeSchwarz.RsInstrument.Conversions;
 using TextBox = System.Windows.Forms.TextBox;
-using static IronPython.Modules._ast;
-using System.Runtime.Remoting.Channels;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
-using System.Globalization;
+#endregion
 
 namespace Attempt2
 {
@@ -51,39 +28,13 @@ namespace Attempt2
             PopulatePowerShellScript("RunPython.ps1", ".py", "python", null);
             initialise_BackWorkers();
         }
-        
-        private void Form1_Load(object sender, EventArgs e)
-        {
 
-        }
-
-        
-        private void configuration(int command, int channel, double value)
-        {
-            List<JsonDataFormat> config = new List<JsonDataFormat>()
-            {   
-                new JsonDataFormat("configuration.py", 3, new double[] {command, channel, value} ), 
-            };
-
-            ExportJSON(".data.json", config, true);
-
-            string[] arguments = { "PythonCaller.py" };
-            string output = RunPowerShellScript("RunPython.ps1", arguments);
-            ImportJSON(".dataReady.json");
-            JsonDataFormat obj = ReturnObjFromJsonBuffer("1");
-            string fileLocation = obj.Id;
-           // MessageBox.Show(fileLocation);
-
-        }  // Call python class
-        
-
+        #region BackWorkers
         private void initialise_BackWorkers()
         {
             backgroundWorker1.DoWork += backgroundWorker1_DoWork;
             backgroundWorker1.RunWorkerCompleted +=  backgroundWorker1_RunWorkerCompleted;
         }
-
-        
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -93,13 +44,8 @@ namespace Attempt2
                 dummy_g = RunPowerShellScript("RunPython.ps1", arguments);
                 first_flag_g = false;
             }
-
-            //MessageBox.Show("Hey, I'm done woohoo: " + output);
-        
-            //dummy_g = "not none anymore";
             return;
         }
-
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             //MessageBox.Show(dummy_g);
@@ -115,30 +61,14 @@ namespace Attempt2
             {
                 MessageBox.Show(dummy_g);
             }
-            
-            
-       
+
+
+
         }
-     
-        /*
-        private string sweeping(int channel, string type, string way, double start, double end, double increment, double constant)
-        {
-            int variable, direction;
-            if (type == "Voltage") { variable = 0; } else { variable = 1; }
-            if (way == "up") { direction = 0; } else { direction = 1; }
+        #endregion
 
+        #region Specific Json types
 
-            List<JsonDataFormat> sweep = new List<JsonDataFormat>()
-            {
-                new JsonDataFormat("sweeping.py", 7, new double[] { channel, variable, direction, start, end, increment, constant } ),
-            };
-            ExportJSON(".data.json", sweep, true);
-
-            string[] arguments = { "PythonCaller.py" };
-            string output = RunPowerShellScript("RunPython.ps1", arguments);
-            return output;
-        }  // Call python class
-        */
         private void sweeping(int channel, string way, double start, double end, double increment, double constant)
         {
             int variable = 0, direction;
@@ -152,15 +82,29 @@ namespace Attempt2
             };
 
             ExportJSON(".data.json", sweep, true);
-            //backgroundWorker1_DoWork(null, null);
             backgroundWorker1.RunWorkerAsync();
-            /*int j=0;
-            while (true)
-            {
-                j++;
-            }*/
+            
         }  // Call python class
+        private void configuration(int command, int channel, double value)
+        {
+            List<JsonDataFormat> config = new List<JsonDataFormat>()
+            {
+                new JsonDataFormat("configuration.py", 3, new double[] {command, channel, value} ),
+            };
 
+            ExportJSON(".data.json", config, true);
+
+            string[] arguments = { "PythonCaller.py" };
+            string output = RunPowerShellScript("RunPython.ps1", arguments);
+            ImportJSON(".dataReady.json");
+            JsonDataFormat obj = ReturnObjFromJsonBuffer("1");
+            string fileLocation = obj.Id;
+            // MessageBox.Show(fileLocation);
+
+        }  // Call python class
+        #endregion
+
+        #region Python Interface
         public string PopulatePowerShellScript(string psScriptName, string scriptExt,
                                            string scriptCommand, string[] exclusions)
         {
@@ -256,10 +200,7 @@ namespace Attempt2
             runspace.Open();
             // create a pipeline and feed it the script   
             Pipeline pipeline = runspace.CreatePipeline();
-            /* This implementation may be problematic as the version of PowerShell used must
-             * have 'Set-ExecutionPolicy RemoteSigned'. Note: two verison may exist version x86 and x64.
-             * The command above must be ran for the relevant version.
-             */
+            
             pipeline.Commands.AddScript(@".\" + psScript + argumentCat);
             Collection<PSObject> results = pipeline.Invoke();
             // close the runspace  
@@ -438,6 +379,8 @@ namespace Attempt2
 
         public List<JsonDataFormat> programInScriptOut_jsonBuffer; // Python Interface
 
+        #endregion
+
         private void OnOffSwitch(object sender, EventArgs e) 
         {
             Control source = (Control)sender;
@@ -531,7 +474,7 @@ namespace Attempt2
             }
             
         }
-        // setVoltage or amplitude given user input //DOUBLE!!!
+        // setVoltage or amplitude given user input 
 
         private void startButton(int channel, int element, string command, Control parent)
         {   
@@ -662,35 +605,7 @@ namespace Attempt2
             }
             catch { Console.WriteLine("ERROR in drawGraphFromDataToolStripMenuItem_Click "); }
         }
-
-
-        // IRRELEVANT
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void groupBox4_Enter(object sender, EventArgs e)
-        {
-
-        }
-        private void groupBox5_Enter(object sender, EventArgs e)
-        {
-
-        }
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
-        {
-
-        }
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
+        // call form3 when clicked
     }
 }
 

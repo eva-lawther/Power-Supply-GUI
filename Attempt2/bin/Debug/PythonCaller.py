@@ -1,12 +1,4 @@
 
-import imp
-from re import S
-import sys
-import time
-import pyvisa
-import json
-import matplotlib.pyplot as plt
-import numpy as np
 import sed_json as fm #file manager ### C# Interaction
 import sweeping
 import configuration

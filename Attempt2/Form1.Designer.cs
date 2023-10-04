@@ -128,7 +128,6 @@ namespace Attempt2
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
             // 
             // groupBox3
             // 
@@ -354,7 +353,6 @@ namespace Attempt2
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Channel3";
-            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
             // button4
             // 
@@ -511,7 +509,6 @@ namespace Attempt2
             this.groupBox5.TabStop = false;
             this.groupBox5.Tag = "1;Box";
             this.groupBox5.Text = "SweepingVoltage";
-            this.groupBox5.Enter += new System.EventHandler(this.groupBox5_Enter);
             // 
             // textBox25
             // 
@@ -612,7 +609,6 @@ namespace Attempt2
             this.label1.TabIndex = 3;
             this.label1.Tag = "label";
             this.label1.Text = "Set Start";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // textBox9
             // 
@@ -687,7 +683,6 @@ namespace Attempt2
             this.textBox1.TabIndex = 4;
             this.textBox1.Tag = "1;1";
             this.textBox1.Text = "0";
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label2
             // 
@@ -998,7 +993,6 @@ namespace Attempt2
             this.menuStrip1.Size = new System.Drawing.Size(1690, 42);
             this.menuStrip1.TabIndex = 15;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // createTestListToolStripMenuItem
             // 
@@ -1045,7 +1039,6 @@ namespace Attempt2
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Power SupplyGUI";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox8.ResumeLayout(false);

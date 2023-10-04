@@ -1,30 +1,20 @@
-﻿using System;
+﻿#region Imports
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Management.Automation.Language;
 using System.Management.Automation.Runspaces;
-using System.Reflection.Emit;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.PowerShell.Commands;
-using Microsoft.Scripting.Hosting.Shell;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 using Button = System.Windows.Forms.Button;
 using Label = System.Windows.Forms.Label;
-using TextBox = System.Windows.Forms.TextBox;
+using TextBox = System.Windows.Forms.TextBox; 
+#endregion
 
 namespace Attempt2
 {
@@ -33,28 +23,16 @@ namespace Attempt2
         
         private string[] COMMAND_GLOBAL = new string[8];
         private string instrumentInitials = "";
-        //private GroupBox groupBox;
-        //private Control checkedListParent = Form2;
-
+        string dummy_g = "none";
+        bool first_flag_g = true;
+      
         public Form2()
         {
             InitializeComponent();
             initialise_BackWorkers();
         }
 
-        private void runCommandList()
-        {
-            List<JsonDataFormat> commandList = new List<JsonDataFormat>()
-            {
-                new JsonDataFormat("runCommandList.py",0, new double[] {} ), 
-            };
-
-            ExportJSON(".data.json", commandList, true);
-            backgroundWorker2.RunWorkerAsync();
-            //string[] arguments = { "PythonCaller.py" };
-            //string output = RunPowerShellScript("RunPython.ps1", arguments);
-        }
-
+        #region BackWorkers
         private void initialise_BackWorkers()
         {
             /*
@@ -65,8 +43,7 @@ namespace Attempt2
             backgroundWorker2.RunWorkerCompleted += backgroundWorker2_RunWorkerCompleted;
         }
 
-        string dummy_g = "none";
-        bool first_flag_g = true;
+
         private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
         {
 
@@ -102,7 +79,25 @@ namespace Attempt2
 
 
         }
+        #endregion
 
+        #region Specific Json type
+        private void runCommandList()
+        {
+            List<JsonDataFormat> commandList = new List<JsonDataFormat>()
+            {
+                new JsonDataFormat("runCommandList.py",0, new double[] {} ),
+            };
+
+            ExportJSON(".data.json", commandList, true);
+            backgroundWorker2.RunWorkerAsync();
+            //string[] arguments = { "PythonCaller.py" };
+            //string output = RunPowerShellScript("RunPython.ps1", arguments);
+        }
+
+        #endregion
+
+        #region Python Interface
 
         public string RunPowerShellScript(string psScript, string[] arguments)
         {
@@ -138,7 +133,6 @@ namespace Attempt2
             // Return the resultant output string.
             return stringBuilder.ToString();
         }
-
 
         public bool ExportJSON(string jsonFile, List<JsonDataFormat> jsonDataOut, bool overwrite)
         {
@@ -242,31 +236,6 @@ namespace Attempt2
             return true;
         }
 
-        public JsonDataFormat ReturnObjFromJsonBuffer(string id)
-        {
-            if (programInScriptOut_jsonBuffer != null)
-            {
-                foreach (JsonDataFormat element in programInScriptOut_jsonBuffer)
-                {
-                    if (element.Id == id) return element;
-                }
-            }
-            return null;
-        }
-
-        public void InitialiseJsons(List<string> initFiles)
-        {
-            // Generate any files that do not alrady exist.
-            foreach (string file in initFiles)
-            {
-                if (!File.Exists(file))
-                {
-                    FileStream fs = File.Create(file);
-                    fs.Close();
-                }
-            }
-        }
-
         public class JsonDataFormat
         {
             public JsonDataFormat(string id, int length, double[] values)
@@ -282,7 +251,7 @@ namespace Attempt2
 
         public List<JsonDataFormat> programInScriptOut_jsonBuffer; // Python Interface
 
-
+        #endregion
 
         private void newCommmandButton(object sender, EventArgs e)
         {
@@ -306,7 +275,7 @@ namespace Attempt2
             catch { Console.WriteLine("Error with new command button: ERROR in newCommandButton"); }
             
         }  
-        // Make command button that lists instruments//power supply categories
+        // Make command button that lists instruments
 
         private void listCategories(object sender, ToolStripItemClickedEventArgs e)
         {
@@ -341,6 +310,7 @@ namespace Attempt2
             }
             catch { Console.WriteLine("Cannot find category file: ERROR in itemClick"); }
         }
+        // List categories of chosen input
 
         private void itemClick(object sender, ToolStripItemClickedEventArgs e) 
         {
@@ -367,7 +337,6 @@ namespace Attempt2
 
         }
         // Makes a sub menu based on power supply category chosen
-
 
         private string[] textFileToArray(string fileName)
         {
@@ -809,32 +778,6 @@ namespace Attempt2
         }
         // writes all checked commands into a text file and calls the correct python file
 
-
-        // IRRELEVANT
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-        private void listOfCommands(object sender, EventArgs e)
-        {
-
-        }
-        private void Form2_Load(object sender, EventArgs e)
-        {
-
-        }
-
-      
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
         private void mainControlsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -845,6 +788,7 @@ namespace Attempt2
             }
             catch { Console.WriteLine("ERROR in mainControlsToolStripMenuItem_Click "); }
         }
+        // call Form1 when clicked
 
         private void drawGraphFromDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -856,5 +800,6 @@ namespace Attempt2
             }
             catch { Console.WriteLine("ERROR in drawGraphFromDataToolStripMenuItem_Click "); }
         }
+        // call Form3 when clicked
     }
 }

@@ -1,8 +1,5 @@
-from pydoc import Doc
-from re import S
-from tkinter import Variable
+
 import pyvisa
-from time import sleep
 from commandClass import channelInstrument 
 import sed_json as fm #file manager ### C# Interaction
 
